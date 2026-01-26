@@ -9,7 +9,7 @@ CREATE OR REPLACE SCHEMA dvd_rental.gold;
 -- category / film / bridges
 CREATE TABLE OR REPLACE dvd_rental.bronze.category (
     category_id         INTEGER,
-    category_name                VARCHAR,
+    category_name       VARCHAR,
     valid_from          TIMESTAMP_NTZ,
     file_name           VARCHAR,
     load_timestamp      TIMESTAMP_LTZ DEFAULT CURRENT_TIMESTAMP()
@@ -27,7 +27,7 @@ CREATE TABLE OR REPLACE dvd_rental.bronze.film_category (
 CREATE TABLE OR REPLACE dvd_rental.bronze.film (
     film_id             INTEGER,
     title               VARCHAR,
-    description         VARCHAR,
+    film_description         VARCHAR,
     release_year        INTEGER,
     language_id         INTEGER,
     rental_duration     FLOAT,
@@ -37,7 +37,7 @@ CREATE TABLE OR REPLACE dvd_rental.bronze.film (
     rating              VARCHAR,
     valid_from          TIMESTAMP_NTZ,
     special_features    VARCHAR,
-    fulltext            VARCHAR,
+    film_fulltext       VARCHAR,
     file_name           VARCHAR,
     load_timestamp      TIMESTAMP_LTZ DEFAULT CURRENT_TIMESTAMP()
 );
@@ -81,7 +81,7 @@ CREATE TABLE OR REPLACE dvd_rental.bronze.customer (
 
 CREATE TABLE OR REPLACE dvd_rental.bronze.address (
     address_id         INTEGER,
-    address            VARCHAR,
+    address1            VARCHAR,
     address2           VARCHAR,
     district           VARCHAR,
     city_id            INTEGER,
@@ -152,7 +152,7 @@ CREATE TABLE OR REPLACE dvd_rental.bronze.rental (
 
 CREATE TABLE OR REPLACE dvd_rental.bronze.language (
     language_id        INTEGER,
-    language_name               VARCHAR,
+    language_name      VARCHAR,
     valid_from         TIMESTAMP_NTZ,
     file_name          VARCHAR,
     load_timestamp     TIMESTAMP_LTZ DEFAULT CURRENT_TIMESTAMP()
