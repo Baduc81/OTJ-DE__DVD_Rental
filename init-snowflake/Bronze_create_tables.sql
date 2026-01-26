@@ -32,12 +32,12 @@ CREATE TABLE OR REPLACE dvd_rental.bronze.film (
     language_id         INTEGER,
     rental_duration     FLOAT,
     rental_rate         FLOAT,
-    film_length              INTEGER,
+    film_length         INTEGER,
     replacement_cost    FLOAT,
     rating              VARCHAR,
     valid_from          TIMESTAMP_NTZ,
     special_features    VARCHAR,
-    film_fulltext            VARCHAR,
+    film_fulltext       VARCHAR,
     file_name           VARCHAR,
     load_timestamp      TIMESTAMP_LTZ DEFAULT CURRENT_TIMESTAMP()
 );
@@ -172,7 +172,7 @@ CREATE TABLE OR REPLACE dvd_rental.bronze.store (
     store_id           INTEGER,
     manager_staff_id   INTEGER,
     address_id         INTEGER,
-    valid_from        TIMESTAMP_NTZ,
+    valid_from         TIMESTAMP_NTZ,
     file_name          VARCHAR,
     load_timestamp     TIMESTAMP_LTZ DEFAULT CURRENT_TIMESTAMP()
 );
