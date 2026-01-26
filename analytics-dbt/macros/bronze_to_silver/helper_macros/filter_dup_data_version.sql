@@ -4,8 +4,8 @@ SELECT
     {% for col in standard_cols -%}
     cs.{{ col }},
     {% endfor -%}
-    record_hash,
-    is_duplicated_file,
+    cs.record_hash,
+    cs.is_duplicated_file,
     CASE 
         WHEN cs.record_hash = t.record_hash THEN TRUE 
         ELSE FALSE 
