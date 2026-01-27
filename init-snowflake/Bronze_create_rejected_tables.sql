@@ -9,7 +9,6 @@ CREATE OR REPLACE TABLE dvd_rental.bronze.category_rejected (
 CREATE OR REPLACE TABLE dvd_rental.bronze.film_category_rejected (
     film_id        INTEGER,
     category_id    INTEGER,
-    last_update    TIMESTAMPNTZ,
     file_name      VARCHAR,
     valid_from     TIMESTAMPNTZ
 );
@@ -25,9 +24,8 @@ CREATE OR REPLACE TABLE dvd_rental.bronze.film_rejected (
     film_length        INTEGER,
     replacement_cost   FLOAT,
     rating             VARCHAR,
-    last_update        TIMESTAMPNTZ,
     special_features   VARCHAR,
-    fulltext           VARCHAR,
+    film_fulltext      VARCHAR,
     file_name          VARCHAR,
     valid_from         TIMESTAMPNTZ
 );
@@ -38,7 +36,6 @@ CREATE OR REPLACE TABLE dvd_rental.bronze.payment_rejected (
     staff_id        INTEGER,
     rental_id       INTEGER,
     amount          FLOAT,
-    payment_date    TIMESTAMPNTZ,
     file_name       VARCHAR,
     valid_from      TIMESTAMPNTZ
 );
@@ -47,7 +44,6 @@ CREATE OR REPLACE TABLE dvd_rental.bronze.payment_rejected (
 CREATE OR REPLACE TABLE dvd_rental.bronze.film_actor_rejected (
     actor_id        INTEGER,
     film_id         INTEGER,
-    last_update     TIMESTAMPNTZ,
     file_name       VARCHAR,
     valid_from      TIMESTAMPNTZ
 );
@@ -62,7 +58,6 @@ CREATE OR REPLACE TABLE dvd_rental.bronze.customer_rejected (
     address_id      INTEGER,
     activebool      VARCHAR,
     create_date     VARCHAR,
-    last_update     TIMESTAMPNTZ,
     active          VARCHAR,
     file_name       VARCHAR,
     valid_from      TIMESTAMPNTZ
@@ -77,7 +72,6 @@ CREATE OR REPLACE TABLE dvd_rental.bronze.address_rejected (
     city_id         INTEGER,
     postal_code     VARCHAR,
     phone           VARCHAR,
-    last_update     TIMESTAMPNTZ,
     file_name       VARCHAR,
     valid_from      TIMESTAMPNTZ
 );
@@ -92,7 +86,6 @@ CREATE OR REPLACE TABLE dvd_rental.bronze.staff_rejected (
     active          BOOLEAN,
     username        VARCHAR,
     staff_password  VARCHAR,
-    last_update     TIMESTAMPNTZ,
     picture         VARCHAR,
     file_name       VARCHAR,
     valid_from      TIMESTAMPNTZ
@@ -103,7 +96,6 @@ CREATE OR REPLACE TABLE dvd_rental.bronze.city_rejected (
     city_id         INTEGER,
     city            VARCHAR,
     country_id      INTEGER,
-    last_update     TIMESTAMPNTZ,
     file_name       VARCHAR,
     valid_from      TIMESTAMPNTZ
 );
@@ -112,7 +104,6 @@ CREATE OR REPLACE TABLE dvd_rental.bronze.city_rejected (
 CREATE OR REPLACE TABLE dvd_rental.bronze.country_rejected (
     country_id      INTEGER,
     country         VARCHAR,
-    last_update     TIMESTAMPNTZ,
     file_name       VARCHAR,
     valid_from      TIMESTAMPNTZ
 );
@@ -134,7 +125,6 @@ CREATE OR REPLACE TABLE dvd_rental.bronze.rental_rejected (
     customer_id     INTEGER,
     return_date     VARCHAR,
     staff_id        INTEGER,
-    last_update     TIMESTAMPNTZ,
     file_name       VARCHAR,
     valid_from      TIMESTAMPNTZ
 );
@@ -142,7 +132,6 @@ CREATE OR REPLACE TABLE dvd_rental.bronze.rental_rejected (
 CREATE OR REPLACE TABLE dvd_rental.bronze.language_rejected (
     language_id     INTEGER,
     language_name   VARCHAR,
-    last_update     TIMESTAMPNTZ,
     file_name       VARCHAR,
     valid_from      TIMESTAMPNTZ
 );
@@ -152,7 +141,6 @@ CREATE OR REPLACE TABLE dvd_rental.bronze.inventory_rejected (
     inventory_id    INTEGER,
     film_id         INTEGER,
     store_id        INTEGER,
-    last_update     TIMESTAMPNTZ,
     file_name       VARCHAR,
     valid_from      TIMESTAMPNTZ
 );
@@ -161,7 +149,6 @@ CREATE OR REPLACE TABLE dvd_rental.bronze.store_rejected (
     store_id           INTEGER,
     manager_staff_id   INTEGER,
     address_id         INTEGER,
-    last_update        VARCHAR,
     file_name         VARCHAR,
     valid_from        TIMESTAMPNTZ
 );
