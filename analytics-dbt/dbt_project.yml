@@ -37,31 +37,23 @@ dbt-cloud:
 # using the `{{ config(...) }}` macro.
 
 models:
-  dvd_rental_analytics:
+  bronze:
+    +schema: bronze
+    +materialized: table
+    +tags: ['bronze']
 
-    bronze:
-      +schema: bronze
-      +materialized: view
-      +tags: ['bronze']
+  silver:
+    +schema: silver
+    +materialized: incremental
+    +tags: ['silver']
+    
+  gold:
+    +schema: gold
+    +materialized: table
+    +tags: ['gold']
 
-      dvd_rental:
-        +enabled: true
+    marts:
+      +tags: ['mart']
 
-    silver:
-      +schema: silver
-      +materialized: incremental
-      +tags: ['silver']
-
-      dvd_rental:
-        +on_schema_change: sync_all_columns
-
-    gold:
-      +schema: gold
-      +materialized: table
-      +tags: ['gold']
-
-      marts:
-        +tags: ['mart']
-
-      reporting:
-        +tags: ['reporting']
+    reporting:
+      +tags: ['reporting']
