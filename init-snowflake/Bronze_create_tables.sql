@@ -7,16 +7,16 @@ CREATE OR REPLACE SCHEMA dvd_rental.silver;
 CREATE OR REPLACE SCHEMA dvd_rental.gold;
 
 -- category / film / bridges
-CREATE TABLE OR REPLACE dvd_rental.bronze.category (
-    category_id         INTEGER,
-    category_name       VARCHAR,
-    valid_from          TIMESTAMP_NTZ,
-    file_name           VARCHAR,
-    load_timestamp      TIMESTAMP_LTZ DEFAULT CURRENT_TIMESTAMP()
+CREATE OR REPLACE TABLE dvd_rental.bronze.category (
+    category_id             INTEGER,
+    category_name           VARCHAR,
+    valid_from              TIMESTAMP_NTZ,
+    file_name               VARCHAR,
+    load_timestamp          TIMESTAMP_LTZ DEFAULT CURRENT_TIMESTAMP()
 );
 
 
-CREATE TABLE OR REPLACE dvd_rental.bronze.film_category (
+CREATE OR REPLACE TABLE dvd_rental.bronze.film_category (
     film_id             INTEGER,
     category_id         INTEGER,
     valid_from          TIMESTAMP_NTZ,
@@ -24,7 +24,7 @@ CREATE TABLE OR REPLACE dvd_rental.bronze.film_category (
     load_timestamp      TIMESTAMP_LTZ DEFAULT CURRENT_TIMESTAMP()
 );
 
-CREATE TABLE OR REPLACE dvd_rental.bronze.film (
+CREATE OR REPLACE TABLE dvd_rental.bronze.film (
     film_id             INTEGER,
     title               VARCHAR,
     film_description         VARCHAR,
@@ -32,17 +32,17 @@ CREATE TABLE OR REPLACE dvd_rental.bronze.film (
     language_id         INTEGER,
     rental_duration     FLOAT,
     rental_rate         FLOAT,
-    film_length              INTEGER,
+    film_length         INTEGER,
     replacement_cost    FLOAT,
     rating              VARCHAR,
     valid_from          TIMESTAMP_NTZ,
     special_features    VARCHAR,
-    film_fulltext            VARCHAR,
+    film_fulltext       VARCHAR,
     file_name           VARCHAR,
     load_timestamp      TIMESTAMP_LTZ DEFAULT CURRENT_TIMESTAMP()
 );
 
-CREATE TABLE OR REPLACE dvd_rental.bronze.payment (
+CREATE OR REPLACE TABLE dvd_rental.bronze.payment (
     payment_id         INTEGER,
     customer_id        INTEGER,
     staff_id           INTEGER,
@@ -54,7 +54,7 @@ CREATE TABLE OR REPLACE dvd_rental.bronze.payment (
 );
 
 
-CREATE TABLE OR REPLACE dvd_rental.bronze.film_actor (
+CREATE OR REPLACE TABLE dvd_rental.bronze.film_actor (
     actor_id           INTEGER,
     film_id            INTEGER,
     valid_from         TIMESTAMP_NTZ,
@@ -63,7 +63,7 @@ CREATE TABLE OR REPLACE dvd_rental.bronze.film_actor (
 );
 
 -- address hierarchy & people
-CREATE TABLE OR REPLACE dvd_rental.bronze.customer (
+CREATE OR REPLACE TABLE dvd_rental.bronze.customer (
     customer_id        INTEGER,
     store_id           INTEGER,
     first_name         VARCHAR,
@@ -79,7 +79,7 @@ CREATE TABLE OR REPLACE dvd_rental.bronze.customer (
 );
 
 
-CREATE TABLE OR REPLACE dvd_rental.bronze.address (
+CREATE OR REPLACE TABLE dvd_rental.bronze.address (
     address_id         INTEGER,
     address1            VARCHAR,
     address2           VARCHAR,
@@ -92,7 +92,7 @@ CREATE TABLE OR REPLACE dvd_rental.bronze.address (
     load_timestamp     TIMESTAMP_LTZ DEFAULT CURRENT_TIMESTAMP()
 );
 
-CREATE TABLE OR REPLACE dvd_rental.bronze.staff (
+CREATE OR REPLACE TABLE dvd_rental.bronze.staff (
     staff_id           INTEGER,
     first_name         VARCHAR,
     last_name          VARCHAR,
@@ -109,7 +109,7 @@ CREATE TABLE OR REPLACE dvd_rental.bronze.staff (
 );
 
 
-CREATE TABLE OR REPLACE dvd_rental.bronze.city (
+CREATE OR REPLACE TABLE dvd_rental.bronze.city (
     city_id            INTEGER,
     city               VARCHAR,
     country_id         INTEGER,
@@ -119,7 +119,7 @@ CREATE TABLE OR REPLACE dvd_rental.bronze.city (
 );
 
 
-CREATE TABLE OR REPLACE dvd_rental.bronze.country (
+CREATE OR REPLACE TABLE dvd_rental.bronze.country (
     country_id         INTEGER,
     country            VARCHAR,
     valid_from         TIMESTAMP_NTZ,
@@ -128,7 +128,7 @@ CREATE TABLE OR REPLACE dvd_rental.bronze.country (
 );
 
 
-CREATE TABLE OR REPLACE dvd_rental.bronze.actor (
+CREATE OR REPLACE TABLE dvd_rental.bronze.actor (
     first_name         VARCHAR,
     actor_id           INTEGER,
     last_name          VARCHAR,
@@ -138,7 +138,7 @@ CREATE TABLE OR REPLACE dvd_rental.bronze.actor (
 );
 
 -- store & inventory & transactions
-CREATE TABLE OR REPLACE dvd_rental.bronze.rental (
+CREATE OR REPLACE TABLE dvd_rental.bronze.rental (
     rental_id          INTEGER,
     rental_date        TIMESTAMP_LTZ,
     inventory_id       INTEGER,
@@ -150,7 +150,7 @@ CREATE TABLE OR REPLACE dvd_rental.bronze.rental (
     load_timestamp     TIMESTAMP_LTZ DEFAULT CURRENT_TIMESTAMP()
 );
 
-CREATE TABLE OR REPLACE dvd_rental.bronze.language (
+CREATE OR REPLACE TABLE dvd_rental.bronze.language (
     language_id        INTEGER,
     language_name      VARCHAR,
     valid_from         TIMESTAMP_NTZ,
@@ -159,7 +159,7 @@ CREATE TABLE OR REPLACE dvd_rental.bronze.language (
 );
 
 
-CREATE TABLE OR REPLACE dvd_rental.bronze.inventory (
+CREATE OR REPLACE TABLE dvd_rental.bronze.inventory (
     inventory_id        INTEGER,
     film_id             INTEGER,
     store_id            INTEGER,
@@ -168,11 +168,11 @@ CREATE TABLE OR REPLACE dvd_rental.bronze.inventory (
     load_timestamp      TIMESTAMP_LTZ DEFAULT CURRENT_TIMESTAMP()
 );
 
-CREATE TABLE OR REPLACE dvd_rental.bronze.store (
+CREATE OR REPLACE TABLE dvd_rental.bronze.store (
     store_id           INTEGER,
     manager_staff_id   INTEGER,
     address_id         INTEGER,
-    valid_from        TIMESTAMP_NTZ,
+    valid_from         TIMESTAMP_NTZ,
     file_name          VARCHAR,
     load_timestamp     TIMESTAMP_LTZ DEFAULT CURRENT_TIMESTAMP()
 );
