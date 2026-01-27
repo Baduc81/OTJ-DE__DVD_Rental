@@ -5,7 +5,7 @@
     "file_name"
 ] -%}
 
-{%- set unique_key = "actor_id || '-' || film_id" -%}
+{%- set unique_key = "unique_id" -%}
 {%- set join_table = "dvd_rental.silver.film_actor" -%}
 {%- set source = source("bronze", "film_actor_strm") -%}
 
