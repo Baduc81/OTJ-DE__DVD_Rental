@@ -1,0 +1,207 @@
+version: 2
+
+models:
+  # --- CATEGORY ---
+  - name: category
+    config:
+      materialized: table
+      schema: silver
+    description: "Temporary table for categories with duplicate flagging."
+    columns:
+      - name: category_id
+        tests: [not_null]
+      - name: category_name
+        tests: [not_null]
+      - name: record_hash
+        tests: [not_null]
+      - name: is_current
+        tests: [not_null]
+
+  # --- FILM ---
+  - name: film
+    config:
+      materialized: table
+      schema: silver
+    description: "Temporary table for films with duplicate flagging."
+    columns:
+      - name: film_id
+        tests: [not_null]
+      - name: title
+        tests: [not_null]
+      - name: record_hash
+        tests: [not_null]
+      - name: is_current
+        tests: [not_null]
+
+  # --- PAYMENT ---
+  - name: payment
+    config:
+      materialized: table
+      schema: silver
+    columns:
+      - name: payment_id
+        tests: [not_null]
+      - name: record_hash
+        tests: [not_null]
+      - name: is_current
+        tests: [not_null]
+
+  # --- CUSTOMER ---
+  - name: customer
+    config:
+      materialized: table
+      schema: silver
+    columns:
+      - name: customer_id
+        tests: [not_null]
+      - name: record_hash
+        tests: [not_null]
+      - name: is_current
+        tests: [not_null]
+
+  # --- STAFF ---
+  - name: staff
+    config:
+      materialized: table
+      schema: silver
+    columns:
+      - name: staff_id
+        tests: [not_null]
+      - name: record_hash
+        tests: [not_null]
+      - name: is_current
+        tests: [not_null]
+
+  # --- ADDRESS ---
+  - name: address
+    config:
+      materialized: table
+      schema: silver
+    columns:
+      - name: address_id
+        tests: [not_null]
+      - name: record_hash
+        tests: [not_null]
+      - name: is_current
+        tests: [not_null]
+
+  # --- RENTAL ---
+  - name: rental
+    config:
+      materialized: table
+      schema: silver
+    columns:
+      - name: rental_id
+        tests: [not_null]
+      - name: record_hash
+        tests: [not_null]
+      - name: is_current
+        tests: [not_null]
+
+  # --- ACTOR ---
+  - name: actor
+    config:
+      materialized: table
+      schema: silver
+    columns:
+      - name: actor_id
+        tests: [not_null]
+      - name: record_hash
+        tests: [not_null]
+      - name: is_current
+        tests: [not_null]
+
+  # --- INVENTORY ---
+  - name: inventory
+    config:
+      materialized: table
+      schema: silver
+    columns:
+      - name: inventory_id
+        tests: [not_null]
+      - name: record_hash
+        tests: [not_null]
+      - name: is_current
+        tests: [not_null]
+
+  # --- FILM_CATEGORY ---
+  - name: film_category
+    config:
+      materialized: table
+      schema: silver
+    columns:
+      - name: film_id
+        tests: [not_null]
+      - name: category_id
+        tests: [not_null]
+      - name: record_hash
+        tests: [not_null]
+      - name: is_current
+        tests: [not_null]
+
+  # --- FILM_ACTOR ---
+  - name: film_actor
+    config:
+      materialized: table
+      schema: silver
+    columns:
+      - name: film_id
+        tests: [not_null]
+      - name: actor_id
+        tests: [not_null]
+      - name: record_hash
+        tests: [not_null]
+      - name: is_current
+        tests: [not_null]
+
+  # --- STORE ---
+  - name: store
+    config:
+      materialized: table
+      schema: silver
+    columns:
+      - name: store_id
+        tests: [not_null]
+      - name: record_hash
+        tests: [not_null]
+      - name: is_current
+        tests: [not_null]
+
+  # --- CITY ---
+  - name: city
+    config:
+      materialized: table
+      schema: silver
+    columns:
+      - name: city_id
+        tests: [not_null]
+      - name: record_hash
+        tests: [not_null]
+      - name: is_current
+        tests: [not_null]
+
+  # --- COUNTRY ---
+  - name: country
+    config:
+      materialized: table
+      schema: silver
+    columns:
+      - name: country_id
+        tests: [not_null]
+      - name: record_hash
+        tests: [not_null]
+      - name: is_current
+        tests: [not_null]
+
+  # --- LANGUAGE ---
+  - name: language
+    config:
+      materialized: table
+      schema: silver
+    columns:
+      - name: language_id
+        tests: [not_null]
+      - name: record_hash
+        tests: [not_null]
+      - name: is_current
+        tests: [not_null]
