@@ -20,9 +20,10 @@ CREATE OR REPLACE TASK dvd_rental.bronze.film_category_copy_task
   WAREHOUSE = compute_wh
   SCHEDULE  = '5 MINUTE'
 AS
-COPY INTO dvd_rental.bronze.film_category (film_id, category_id, valid_from, file_name, load_timestamp)
+COPY INTO dvd_rental.bronze.film_category (film_category_id, film_id, category_id, valid_from, file_name, load_timestamp)
 FROM (
   SELECT
+    CONCAT_WS('-', $1, $2) AS film_category_id,
     $1 AS film_id,
     $2 AS category_id,
     $3 AS valid_from,
@@ -91,6 +92,7 @@ AS
 COPY INTO dvd_rental.bronze.film_actor (actor_id, film_id, valid_from, file_name, load_timestamp)
 FROM (
   SELECT
+    CONCAT_WS('-', $1, $2) AS film_category_id,
     $1 AS actor_id,
     $2 AS film_id,
     $3 AS valid_from,
