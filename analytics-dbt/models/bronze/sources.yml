@@ -1,0 +1,6 @@
+sources:
+  - name: bronze
+    database: dvd_rental
+    schema: bronze
+    tables:
+      - name: category_strm
