@@ -1,52 +1,47 @@
 models:
-    - name: category_tmp
-        config:
-            materialized: table
-            database: dvd_rental
-            schema: bronze
-        description: "Temporary table for categories with additional transformations."
-        columns:
-            - name: category_id
-              description: "Unique identifier for each category."
-              tests:
-                  - not_null
-            - name: category_name
-              description: "Name of the category."
-              tests:
-                  - not_null
-            - name: valid_from
-              description: "Timestamp indicating when the category became valid."
-              tests:
-                  - not_null
-            - name: file_name
-              description: "Name of the source file from which the record was ingested."
-              tests:
-                  - not_null
-            - name: is_duplicated_file
-                description: "Flag indicating if the record is from a duplicated file."
-                tests:
-                    - not_null
-            - name: is_duplicated_version
-                description: "Flag indicating if the record is a duplicated version."
-                tests:
-                    - not_null
-            - name: record_hash
-                description: "Hash of the record for deduplication purposes."
-                tests:
-                    - not_null
-    - name: category_rejected
-        config:
-            materialized: incremental
-            incremental_strategy: append
-            database: dvd_rental
-            schema: bronze
-        description: "Table for rejected category records due to duplication."
-        columns:
-            - name: category_id
-              description: "Unique identifier for each category."
-            - name: category_name
-              description: "Name of the category."
-            - name: valid_from
-              description: "Timestamp indicating when the category became valid."
-            - name: file_name
-              description: "Name of the source file from which the record was ingested."
+  - name: category_tmp
+    config:
+      materialized: table
+      database: dvd_rental
+      schema: bronze
+    description: "Temporary table for categories with additional transformations."
+    columns:
+      - name: category_id
+        description: "Unique identifier for each category."
+        tests:
+          - not_null
+      - name: category_name
+        description: "Name of the category."
+        tests:
+          - not_null
+      - name: valid_from
+        description: "Timestamp indicating when the category became valid."
+        tests:
+          - not_null
+      - name: file_name
+        description: "Name of the source file from which the record was ingested."
+        tests:
+          - not_null
+      - name: is_duplicated_file
+        description: "Flag indicating if the record is from a duplicated file."
+        tests:
+        - not_null
+      - name: is_duplicated_version
+        description: "Flag indicating if the record is a duplicated version."
+        tests:
+          - not_null
+      - name: record_hash
+        description: "Hash of the record for deduplication purposes."
+        tests:
+          - not_null
+  - name: category_rejected
+    description: "Table for rejected category records due to duplication."
+    columns:
+      - name: category_id
+        description: "Unique identifier for each category."
+      - name: category_name
+        description: "Name of the category."
+      - name: valid_from
+        description: "Timestamp indicating when the category became valid."
+      - name: file_name
+        description: "Name of the source file from which the record was ingested."
