@@ -1,4 +1,4 @@
-CREATE TABLE OR REPLACE dvd_rental.bronze.category_rejected (
+CREATE OR REPLACE TABLE dvd_rental.bronze.category_rejected (
     category_id    INTEGER,
     category_name  VARCHAR,
     file_name      VARCHAR,
@@ -6,7 +6,7 @@ CREATE TABLE OR REPLACE dvd_rental.bronze.category_rejected (
 );
 
 
-CREATE TABLE OR REPLACE dvd_rental.bronze.film_category_rejected (
+CREATE OR REPLACE TABLE dvd_rental.bronze.film_category_rejected (
     film_id        INTEGER,
     category_id    INTEGER,
     last_update    TIMESTAMPNTZ,
@@ -14,7 +14,7 @@ CREATE TABLE OR REPLACE dvd_rental.bronze.film_category_rejected (
     valid_from     TIMESTAMPNTZ
 );
 
-CREATE TABLE OR REPLACE dvd_rental.bronze.film_rejected (
+CREATE OR REPLACE TABLE dvd_rental.bronze.film_rejected (
     film_id            INTEGER,
     title              VARCHAR,
     film_description   VARCHAR,
@@ -32,7 +32,7 @@ CREATE TABLE OR REPLACE dvd_rental.bronze.film_rejected (
     valid_from         TIMESTAMPNTZ
 );
 
-CREATE TABLE OR REPLACE dvd_rental.bronze.payment_rejected (
+CREATE OR REPLACE TABLE dvd_rental.bronze.payment_rejected (
     payment_id      INTEGER,
     customer_id     INTEGER,
     staff_id        INTEGER,
@@ -44,7 +44,7 @@ CREATE TABLE OR REPLACE dvd_rental.bronze.payment_rejected (
 );
 
 
-CREATE TABLE OR REPLACE dvd_rental.bronze.film_actor_rejected (
+CREATE OR REPLACE TABLE dvd_rental.bronze.film_actor_rejected (
     actor_id        INTEGER,
     film_id         INTEGER,
     last_update     TIMESTAMPNTZ,
@@ -53,7 +53,7 @@ CREATE TABLE OR REPLACE dvd_rental.bronze.film_actor_rejected (
 );
 
 -- address hierarchy & people
-CREATE TABLE OR REPLACE dvd_rental.bronze.customer_rejected (
+CREATE OR REPLACE TABLE dvd_rental.bronze.customer_rejected (
     customer_id     INTEGER,
     store_id        INTEGER,
     first_name      VARCHAR,
@@ -69,7 +69,7 @@ CREATE TABLE OR REPLACE dvd_rental.bronze.customer_rejected (
 );
 
 
-CREATE TABLE OR REPLACE dvd_rental.bronze.address_rejected (
+CREATE OR REPLACE TABLE dvd_rental.bronze.address_rejected (
     address_id      INTEGER,
     address         VARCHAR,
     address2        VARCHAR,
@@ -82,7 +82,7 @@ CREATE TABLE OR REPLACE dvd_rental.bronze.address_rejected (
     valid_from      TIMESTAMPNTZ
 );
 
-CREATE TABLE OR REPLACE dvd_rental.bronze.staff_rejected (
+CREATE OR REPLACE TABLE dvd_rental.bronze.staff_rejected (
     staff_id        INTEGER,
     first_name      VARCHAR,
     last_name       VARCHAR,
@@ -99,7 +99,7 @@ CREATE TABLE OR REPLACE dvd_rental.bronze.staff_rejected (
 );
 
 
-CREATE TABLE OR REPLACE dvd_rental.bronze.city_rejected (
+CREATE OR REPLACE TABLE dvd_rental.bronze.city_rejected (
     city_id         INTEGER,
     city            VARCHAR,
     country_id      INTEGER,
@@ -109,7 +109,7 @@ CREATE TABLE OR REPLACE dvd_rental.bronze.city_rejected (
 );
 
 
-CREATE TABLE OR REPLACE dvd_rental.bronze.country_rejected (
+CREATE OR REPLACE TABLE dvd_rental.bronze.country_rejected (
     country_id      INTEGER,
     country         VARCHAR,
     last_update     TIMESTAMPNTZ,
@@ -118,16 +118,16 @@ CREATE TABLE OR REPLACE dvd_rental.bronze.country_rejected (
 );
 
 
-CREATE TABLE OR REPLACE dvd_rental.bronze.actor_rejected (
+CREATE OR REPLACE TABLE dvd_rental.bronze.actor_rejected (
     actor_id        INTEGER,
     first_name      VARCHAR,
-    last_name       VVARCHAR,
+    last_name       VARCHAR,
     file_name       VARCHAR,
     valid_from      TIMESTAMPNTZ
 );
 
 -- store & inventory & transactions
-CREATE TABLE OR REPLACE dvd_rental.bronze.rental_rejected (
+CREATE OR REPLACE TABLE dvd_rental.bronze.rental_rejected (
     rental_id       INTEGER,
     rental_date     TIMESTAMPNTZ,
     inventory_id    INTEGER,
@@ -139,7 +139,7 @@ CREATE TABLE OR REPLACE dvd_rental.bronze.rental_rejected (
     valid_from      TIMESTAMPNTZ
 );
 
-CREATE TABLE OR REPLACE dvd_rental.bronze.language_rejected (
+CREATE OR REPLACE TABLE dvd_rental.bronze.language_rejected (
     language_id     INTEGER,
     language_name   VARCHAR,
     last_update     TIMESTAMPNTZ,
@@ -148,7 +148,7 @@ CREATE TABLE OR REPLACE dvd_rental.bronze.language_rejected (
 );
 
 
-CREATE TABLE OR REPLACE dvd_rental.bronze.inventory_rejected (
+CREATE OR REPLACE TABLE dvd_rental.bronze.inventory_rejected (
     inventory_id    INTEGER,
     film_id         INTEGER,
     store_id        INTEGER,
@@ -157,7 +157,7 @@ CREATE TABLE OR REPLACE dvd_rental.bronze.inventory_rejected (
     valid_from      TIMESTAMPNTZ
 );
 
-CREATE TABLE OR REPLACE dvd_rental.bronze.store_rejected (
+CREATE OR REPLACE TABLE dvd_rental.bronze.store_rejected (
     store_id           INTEGER,
     manager_staff_id   INTEGER,
     address_id         INTEGER,

@@ -1,4 +1,4 @@
-CREATE TABLE OR REPLACE dvd_rental.bronze.category_tmp (
+CREATE OR REPLACE TRANSIENT TABLE dvd_rental.bronze.category_tmp (
     category_id             INTEGER,
     category_name           VARCHAR,
     file_name               VARCHAR,
@@ -9,7 +9,7 @@ CREATE TABLE OR REPLACE dvd_rental.bronze.category_tmp (
 );
 
 
-CREATE TABLE OR REPLACE dvd_rental.bronze.film_category_tmp (
+CREATE OR REPLACE TRANSIENT TABLE dvd_rental.bronze.film_category_tmp (
     film_id                 INTEGER,
     category_id             INTEGER,
     file_name               VARCHAR,
@@ -19,7 +19,7 @@ CREATE TABLE OR REPLACE dvd_rental.bronze.film_category_tmp (
     record_hash             VARCHAR
 );
 
-CREATE TABLE OR REPLACE dvd_rental.bronze.film_tmp (
+CREATE OR REPLACE TRANSIENT TABLE dvd_rental.bronze.film_tmp (
     film_id                 INTEGER,
     title                   VARCHAR,
     description             VARCHAR,
@@ -39,7 +39,7 @@ CREATE TABLE OR REPLACE dvd_rental.bronze.film_tmp (
     record_hash             VARCHAR
 );
 
-CREATE TABLE OR REPLACE dvd_rental.bronze.payment_tmp (
+CREATE OR REPLACE TRANSIENT TABLE dvd_rental.bronze.payment_tmp (
     payment_id              INTEGER,
     customer_id             INTEGER,
     staff_id                INTEGER,
@@ -53,8 +53,7 @@ CREATE TABLE OR REPLACE dvd_rental.bronze.payment_tmp (
     record_hash             VARCHAR
 );
 
-
-CREATE TABLE OR REPLACE dvd_rental.bronze.film_actor_tmp (
+CREATE OR REPLACE TRANSIENT TABLE dvd_rental.bronze.film_actor_tmp (
     actor_id                INTEGER,
     film_id                 INTEGER,
     file_name               VARCHAR,
@@ -65,7 +64,7 @@ CREATE TABLE OR REPLACE dvd_rental.bronze.film_actor_tmp (
 );
 
 -- address hierarchy & people
-CREATE TABLE OR REPLACE dvd_rental.bronze.customer_tmp (
+CREATE OR REPLACE TRANSIENT TABLE dvd_rental.bronze.customer_tmp (
     customer_id             INTEGER,
     store_id                INTEGER,
     first_name              VARCHAR,
@@ -83,7 +82,7 @@ CREATE TABLE OR REPLACE dvd_rental.bronze.customer_tmp (
 );
 
 
-CREATE TABLE OR REPLACE dvd_rental.bronze.address_tmp (
+CREATE OR REPLACE TRANSIENT TABLE dvd_rental.bronze.address_tmp (
     address_id              INTEGER,
     address                 VARCHAR,
     address2                VARCHAR,
@@ -98,7 +97,7 @@ CREATE TABLE OR REPLACE dvd_rental.bronze.address_tmp (
     record_hash             VARCHAR
 );
 
-CREATE TABLE OR REPLACE dvd_rental.bronze.staff_tmp (
+CREATE OR REPLACE TRANSIENT TABLE dvd_rental.bronze.staff_tmp (
     staff_id                INTEGER,
     first_name              VARCHAR,
     last_name               VARCHAR,
@@ -117,7 +116,7 @@ CREATE TABLE OR REPLACE dvd_rental.bronze.staff_tmp (
 );
 
 
-CREATE TABLE OR REPLACE dvd_rental.bronze.city_tmp (
+CREATE OR REPLACE TRANSIENT TABLE dvd_rental.bronze.city_tmp (
     city_id                INTEGER,
     city                   VARCHAR,
     country_id             INTEGER,
@@ -129,7 +128,7 @@ CREATE TABLE OR REPLACE dvd_rental.bronze.city_tmp (
 );
 
 
-CREATE TABLE OR REPLACE dvd_rental.bronze.country_tmp (
+CREATE OR REPLACE TRANSIENT TABLE dvd_rental.bronze.country_tmp (
     country_id              INTEGER,
     country                 VARCHAR,
     file_name               VARCHAR,
@@ -140,7 +139,7 @@ CREATE TABLE OR REPLACE dvd_rental.bronze.country_tmp (
 );
 
 
-CREATE TABLE OR REPLACE dvd_rental.bronze.actor_tmp (
+CREATE OR REPLACE TRANSIENT TABLE dvd_rental.bronze.actor_tmp (
     actor_id                INTEGER,
     first_name              VARCHAR,
     last_name               VARCHAR,
@@ -152,7 +151,7 @@ CREATE TABLE OR REPLACE dvd_rental.bronze.actor_tmp (
 );
 
 -- store & inventory & transactions
-CREATE TABLE OR REPLACE dvd_rental.bronze.rental_tmp (
+CREATE OR REPLACE TRANSIENT TABLE dvd_rental.bronze.rental_tmp (
     rental_id               INTEGER,
     rental_date             TIMESTAMPNTZ,
     inventory_id            INTEGER,
@@ -166,7 +165,7 @@ CREATE TABLE OR REPLACE dvd_rental.bronze.rental_tmp (
     record_hash             VARCHAR
 );
 
-CREATE TABLE OR REPLACE dvd_rental.bronze.language_tmp (
+CREATE OR REPLACE TRANSIENT TABLE dvd_rental.bronze.language_tmp (
     language_id             INTEGER,
     language_name           VARCHAR,
     file_name               VARCHAR,
@@ -177,7 +176,7 @@ CREATE TABLE OR REPLACE dvd_rental.bronze.language_tmp (
 );
 
 
-CREATE TABLE OR REPLACE dvd_rental.bronze.inventory_tmp (
+CREATE OR REPLACE TRANSIENT TABLE dvd_rental.bronze.inventory_tmp (
     inventory_id            INTEGER,
     film_id                 INTEGER,
     store_id                INTEGER,
@@ -188,7 +187,7 @@ CREATE TABLE OR REPLACE dvd_rental.bronze.inventory_tmp (
     record_hash             VARCHAR
 );
 
-CREATE TABLE OR REPLACE dvd_rental.bronze.store_tmp (
+CREATE OR REPLACE TRANSIENT TABLE dvd_rental.bronze.store_tmp (
     store_id                INTEGER,
     manager_staff_id        INTEGER,
     address_id              INTEGER,
