@@ -45,7 +45,6 @@ CREATE OR REPLACE TRANSIENT TABLE dvd_rental.bronze.payment_tmp (
     staff_id                INTEGER,
     rental_id               INTEGER,
     amount                  FLOAT,
-    payment_date            TIMESTAMPNTZ,
     file_name               VARCHAR,
     valid_from              TIMESTAMPNTZ,
     is_duplicated_version   BOOLEAN,
