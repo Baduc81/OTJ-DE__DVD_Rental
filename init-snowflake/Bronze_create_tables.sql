@@ -48,7 +48,7 @@ CREATE OR REPLACE TABLE dvd_rental.bronze.payment (
     staff_id           INTEGER,
     rental_id          INTEGER,
     amount             FLOAT,
-    payment_date       TIMESTAMP_LTZ,
+    valid_from       TIMESTAMP_LTZ,
     file_name          VARCHAR,
     load_timestamp     TIMESTAMP_LTZ DEFAULT CURRENT_TIMESTAMP()
 );
@@ -81,7 +81,7 @@ CREATE OR REPLACE TABLE dvd_rental.bronze.customer (
 
 CREATE OR REPLACE TABLE dvd_rental.bronze.address (
     address_id         INTEGER,
-    address1            VARCHAR,
+    address            VARCHAR,
     address2           VARCHAR,
     district           VARCHAR,
     city_id            INTEGER,
