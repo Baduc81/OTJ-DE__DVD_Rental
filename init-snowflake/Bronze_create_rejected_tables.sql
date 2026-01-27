@@ -7,10 +7,11 @@ CREATE OR REPLACE TABLE dvd_rental.bronze.category_rejected (
 
 
 CREATE OR REPLACE TABLE dvd_rental.bronze.film_category_rejected (
-    film_id        INTEGER,
-    category_id    INTEGER,
-    file_name      VARCHAR,
-    valid_from     TIMESTAMPNTZ
+    film_category_id    VARCHAR,
+    film_id             INTEGER,
+    category_id         INTEGER,
+    file_name           VARCHAR,
+    valid_from          TIMESTAMPNTZ
 );
 
 CREATE OR REPLACE TABLE dvd_rental.bronze.film_rejected (
@@ -42,6 +43,7 @@ CREATE OR REPLACE TABLE dvd_rental.bronze.payment_rejected (
 
 
 CREATE OR REPLACE TABLE dvd_rental.bronze.film_actor_rejected (
+    film_actor_id   VARCHAR,
     actor_id        INTEGER,
     film_id         INTEGER,
     file_name       VARCHAR,

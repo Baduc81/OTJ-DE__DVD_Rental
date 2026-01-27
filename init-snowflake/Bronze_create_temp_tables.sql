@@ -10,6 +10,7 @@ CREATE OR REPLACE TRANSIENT TABLE dvd_rental.bronze.category_tmp (
 
 
 CREATE OR REPLACE TRANSIENT TABLE dvd_rental.bronze.film_category_tmp (
+    film_category_id        VARCHAR,
     film_id                 INTEGER,
     category_id             INTEGER,
     file_name               VARCHAR,
@@ -53,6 +54,7 @@ CREATE OR REPLACE TRANSIENT TABLE dvd_rental.bronze.payment_tmp (
 );
 
 CREATE OR REPLACE TRANSIENT TABLE dvd_rental.bronze.film_actor_tmp (
+    film_actor_id           VARCHAR,
     actor_id                INTEGER,
     film_id                 INTEGER,
     file_name               VARCHAR,
