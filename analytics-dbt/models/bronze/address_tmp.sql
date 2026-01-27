@@ -1,5 +1,5 @@
 {%- set standard_cols = [
-    "address1",
+    "address",
     "address2",
     "district",
     "city_id",

@@ -3,7 +3,7 @@
     "staff_id",
     "rental_id",
     "amount",
-    "payment_date",
+    "valid_from",
     "file_name"
 ] -%}
 

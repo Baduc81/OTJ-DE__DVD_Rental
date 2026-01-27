@@ -5,7 +5,7 @@
 
 SELECT 
     address_id,
-    address1,
+    address,
     address2,
     district,
     city_id,

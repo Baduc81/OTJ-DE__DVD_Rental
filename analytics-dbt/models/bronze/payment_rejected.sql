@@ -9,7 +9,7 @@ SELECT
     staff_id,
     rental_id,
     amount,
-    payment_date,
+    valid_from,
     file_name
 FROM {{ ref("payment_tmp") }}
 WHERE is_duplicated_file = TRUE
