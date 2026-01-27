@@ -3,11 +3,11 @@
     incremental_strategy='append'
 ) -}}
 
-SELECT 
-    category_id,
-    category_name,
+SELECT
+    language_id,
+    language_name,
     file_name,
     valid_from
-FROM {{ ref("category_tmp") }}
-WHERE is_duplicated_version = TRUE
+FROM {{ ref("language_tmp") }}
+WHERE is_duplicated_file = TRUE
     OR is_duplicated_version = TRUE

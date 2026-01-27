@@ -3,11 +3,12 @@
     incremental_strategy='append'
 ) -}}
 
-SELECT 
-    category_id,
-    category_name,
+SELECT
+    inventory_id,
+    film_id,
+    store_id,
     file_name,
     valid_from
-FROM {{ ref("category_tmp") }}
-WHERE is_duplicated_version = TRUE
+FROM {{ ref("inventory_tmp") }}
+WHERE is_duplicated_file = TRUE
     OR is_duplicated_version = TRUE
