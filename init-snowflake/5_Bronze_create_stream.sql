@@ -1,3 +1,5 @@
+USE ROLE ACCOUNTADMIN;
+
 -- category / film / bridges
 CREATE OR REPLACE STREAM dvd_rental.bronze.category_strm
   ON TABLE bronze.category
@@ -75,3 +77,5 @@ CREATE OR REPLACE STREAM dvd_rental.bronze.payment_strm
   ON TABLE bronze.payment
   APPEND_ONLY = TRUE
   SHOW_INITIAL_ROWS = FALSE;
+
+SHOW STREAMS IN dvd_rental.bronze;

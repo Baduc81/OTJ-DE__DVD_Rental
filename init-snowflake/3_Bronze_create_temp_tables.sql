@@ -1,3 +1,5 @@
+USE ROLE ACCOUNTADMIN;
+
 CREATE OR REPLACE TRANSIENT TABLE dvd_rental.bronze.category_tmp (
     category_id             INTEGER,
     category_name           VARCHAR,

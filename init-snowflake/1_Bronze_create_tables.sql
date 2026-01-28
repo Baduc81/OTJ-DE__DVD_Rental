@@ -1,10 +1,4 @@
-USE DATABASE dvd_rental;
-
-CREATE OR REPLACE SCHEMA dvd_rental.bronze;
-
-CREATE OR REPLACE SCHEMA dvd_rental.silver;
-
-CREATE OR REPLACE SCHEMA dvd_rental.gold;
+USE ROLE ACCOUNTADMIN;
 
 -- category / film / bridges
 CREATE OR REPLACE TABLE dvd_rental.bronze.category (
@@ -28,7 +22,7 @@ CREATE OR REPLACE TABLE dvd_rental.bronze.film_category (
 CREATE OR REPLACE TABLE dvd_rental.bronze.film (
     film_id             INTEGER,
     title               VARCHAR,
-    film_description         VARCHAR,
+    film_description    VARCHAR,
     release_year        INTEGER,
     language_id         INTEGER,
     rental_duration     FLOAT,
@@ -49,7 +43,7 @@ CREATE OR REPLACE TABLE dvd_rental.bronze.payment (
     staff_id           INTEGER,
     rental_id          INTEGER,
     amount             FLOAT,
-    valid_from       TIMESTAMP_LTZ,
+    valid_from         TIMESTAMP_NTZ,
     file_name          VARCHAR,
     load_timestamp     TIMESTAMP_LTZ DEFAULT CURRENT_TIMESTAMP()
 );
@@ -178,3 +172,5 @@ CREATE OR REPLACE TABLE dvd_rental.bronze.store (
     file_name          VARCHAR,
     load_timestamp     TIMESTAMP_LTZ DEFAULT CURRENT_TIMESTAMP()
 );
+
+SHOW TABLES IN dvd_rental.bronze;

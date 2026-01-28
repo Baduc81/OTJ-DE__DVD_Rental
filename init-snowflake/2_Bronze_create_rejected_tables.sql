@@ -1,3 +1,5 @@
+USE ROLE ACCOUNTADMIN;
+
 CREATE OR REPLACE TABLE dvd_rental.bronze.category_rejected (
     category_id    INTEGER,
     category_name  VARCHAR,
@@ -154,3 +156,5 @@ CREATE OR REPLACE TABLE dvd_rental.bronze.store_rejected (
     file_name         VARCHAR,
     valid_from        TIMESTAMPNTZ
 );
+
+SHOW TABLES IN dvd_rental.bronze;

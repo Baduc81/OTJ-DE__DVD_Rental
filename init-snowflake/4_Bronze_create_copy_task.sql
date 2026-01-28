@@ -1,7 +1,9 @@
+USE ROLE ACCOUNTADMIN;
+
 -- CATEGORY
 CREATE OR REPLACE TASK dvd_rental.bronze.category_copy_task
   WAREHOUSE = compute_wh
-  SCHEDULE  = '5 MINUTE'
+  SCHEDULE  = 'USING CRON 0 0 * * * UTC'
 AS
 COPY INTO dvd_rental.bronze.category (category_id, category_name, valid_from, file_name, load_timestamp)
 FROM (
@@ -18,7 +20,7 @@ FROM (
 -- FILM_CATEGORY
 CREATE OR REPLACE TASK dvd_rental.bronze.film_category_copy_task
   WAREHOUSE = compute_wh
-  SCHEDULE  = '5 MINUTE'
+  SCHEDULE  = 'USING CRON 0 0 * * * UTC'
 AS
 COPY INTO dvd_rental.bronze.film_category (film_category_id, film_id, category_id, valid_from, file_name, load_timestamp)
 FROM (
@@ -36,7 +38,7 @@ FROM (
 -- FILM
 CREATE OR REPLACE TASK dvd_rental.bronze.film_copy_task
   WAREHOUSE = compute_wh
-  SCHEDULE  = '5 MINUTE'
+  SCHEDULE  = 'USING CRON 0 0 * * * UTC'
 AS
 COPY INTO dvd_rental.bronze.film (
   film_id, title, film_description, release_year, language_id,
@@ -67,7 +69,7 @@ FROM (
 -- PAYMENT
 CREATE OR REPLACE TASK dvd_rental.bronze.payment_copy_task
   WAREHOUSE = compute_wh
-  SCHEDULE  = '5 MINUTE'
+  SCHEDULE  = 'USING CRON 0 0 * * * UTC'
 AS
 COPY INTO dvd_rental.bronze.payment (payment_id, customer_id, staff_id, rental_id, amount, valid_from, file_name, load_timestamp)
 FROM (
@@ -87,7 +89,7 @@ FROM (
 -- FILM_ACTOR
 CREATE OR REPLACE TASK dvd_rental.bronze.film_actor_copy_task
   WAREHOUSE = compute_wh
-  SCHEDULE  = '5 MINUTE'
+  SCHEDULE  = 'USING CRON 0 0 * * * UTC'
 AS
 COPY INTO dvd_rental.bronze.film_actor (actor_id, film_id, valid_from, file_name, load_timestamp)
 FROM (
@@ -105,7 +107,7 @@ FROM (
 -- CUSTOMER
 CREATE OR REPLACE TASK dvd_rental.bronze.customer_copy_task
   WAREHOUSE = compute_wh
-  SCHEDULE  = '5 MINUTE'
+  SCHEDULE  = 'USING CRON 0 0 * * * UTC'
 AS
 COPY INTO dvd_rental.bronze.customer (
   customer_id, store_id, first_name, last_name, email, address_id,
@@ -132,7 +134,7 @@ FROM (
 -- ADDRESS
 CREATE OR REPLACE TASK dvd_rental.bronze.address_copy_task
   WAREHOUSE = compute_wh
-  SCHEDULE  = '5 MINUTE'
+  SCHEDULE  = 'USING CRON 0 0 * * * UTC'
 AS
 COPY INTO dvd_rental.bronze.address (
   address_id, address, address2, district, city_id, postal_code, phone,
@@ -157,7 +159,7 @@ FROM (
 -- STAFF
 CREATE OR REPLACE TASK dvd_rental.bronze.staff_copy_task
   WAREHOUSE = compute_wh
-  SCHEDULE  = '5 MINUTE'
+  SCHEDULE  = 'USING CRON 0 0 * * * UTC'
 AS
 COPY INTO dvd_rental.bronze.staff (
   staff_id, first_name, last_name, address_id, email, store_id,
@@ -185,7 +187,7 @@ FROM (
 -- CITY
 CREATE OR REPLACE TASK dvd_rental.bronze.city_copy_task
   WAREHOUSE = compute_wh
-  SCHEDULE  = '5 MINUTE'
+  SCHEDULE  = 'USING CRON 0 0 * * * UTC'
 AS
 COPY INTO dvd_rental.bronze.city (city_id, city, country_id, valid_from, file_name, load_timestamp)
 FROM (
@@ -203,7 +205,7 @@ FROM (
 -- COUNTRY
 CREATE OR REPLACE TASK dvd_rental.bronze.country_copy_task
   WAREHOUSE = compute_wh
-  SCHEDULE  = '5 MINUTE'
+  SCHEDULE  = 'USING CRON 0 0 * * * UTC'
 AS
 COPY INTO dvd_rental.bronze.country (country_id, country, valid_from, file_name, load_timestamp)
 FROM (
@@ -220,7 +222,7 @@ FROM (
 -- ACTOR
 CREATE OR REPLACE TASK dvd_rental.bronze.actor_copy_task
   WAREHOUSE = compute_wh
-  SCHEDULE  = '5 MINUTE'
+  SCHEDULE  = 'USING CRON 0 0 * * * UTC'
 AS
 COPY INTO dvd_rental.bronze.actor (actor_id, first_name, last_name, valid_from, file_name, load_timestamp)
 FROM (
@@ -238,7 +240,7 @@ FROM (
 -- RENTAL
 CREATE OR REPLACE TASK dvd_rental.bronze.rental_copy_task
   WAREHOUSE = compute_wh
-  SCHEDULE  = '5 MINUTE'
+  SCHEDULE  = 'USING CRON 0 0 * * * UTC'
 AS
 COPY INTO dvd_rental.bronze.rental (
   rental_id, rental_date, inventory_id, customer_id, return_date, staff_id, valid_from, file_name, load_timestamp
@@ -261,7 +263,7 @@ FROM (
 -- LANGUAGE
 CREATE OR REPLACE TASK dvd_rental.bronze.language_copy_task
   WAREHOUSE = compute_wh
-  SCHEDULE  = '5 MINUTE'
+  SCHEDULE  = 'USING CRON 0 0 * * * UTC'
 AS
 COPY INTO dvd_rental.bronze.language (language_id, language_name, valid_from, file_name, load_timestamp)
 FROM (
@@ -278,7 +280,7 @@ FROM (
 -- INVENTORY
 CREATE OR REPLACE TASK dvd_rental.bronze.inventory_copy_task
   WAREHOUSE = compute_wh
-  SCHEDULE  = '5 MINUTE'
+  SCHEDULE  = 'USING CRON 0 0 * * * UTC'
 AS
 COPY INTO dvd_rental.bronze.inventory (inventory_id, film_id, store_id, valid_from, file_name, load_timestamp)
 FROM (
@@ -296,7 +298,7 @@ FROM (
 -- STORE
 CREATE OR REPLACE TASK dvd_rental.bronze.store_copy_task
   WAREHOUSE = compute_wh
-  SCHEDULE  = '5 MINUTE'
+  SCHEDULE  = 'USING CRON 0 0 * * * UTC'
 AS
 COPY INTO dvd_rental.bronze.store (store_id, manager_staff_id, address_id, valid_from, file_name, load_timestamp)
 FROM (
@@ -310,3 +312,5 @@ FROM (
   FROM @dvd_rental.bronze.dvd_rental_stage/store/
   WHERE METADATA$FILENAME ILIKE '%store%.csv'
 );
+
+SHOW TASKS IN dvd_rental.bronze;
