@@ -1,6 +1,6 @@
-{%- macro add_md5_hash_col(source, standard_cols, unique_key) -%}
+{% macro add_md5_hash_col(source, standard_cols, unique_key) %}
 
-{%- set clean_cols = [] -%}
+{% set clean_cols = [] -%}
 {%- for col in standard_cols -%}
     {%- if col != 'file_name' -%}
     {%- do clean_cols.append(col) -%}
@@ -19,4 +19,4 @@ SELECT *,
     ) AS record_hash
 FROM
     {{ source }}
-{%- endmacro -%}
+{% endmacro %}

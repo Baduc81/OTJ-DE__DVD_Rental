@@ -1,0 +1,267 @@
+version: 2
+
+models:
+  # --- CATEGORY ---
+  - name: category_tmp
+    config:
+      materialized: incremental
+      incremental_strategy: append
+      schema: bronze
+    description: "Temporary table for categories with duplicate flagging."
+    columns:
+      - name: category_id
+        tests: [not_null]
+      - name: category_name
+        tests: [not_null]
+      - name: is_duplicated_file
+        tests: [not_null]
+      - name: is_duplicated_version
+        tests: [not_null]
+
+  - name: category_rejected
+    description: "Rejected category records (duplicates)."
+
+  # --- FILM ---
+  - name: film_tmp
+    config:
+      materialized: incremental
+      incremental_strategy: append
+      schema: bronze
+    description: "Temporary table for films with duplicate flagging."
+    columns:
+      - name: film_id
+        tests: [not_null]
+      - name: title
+        tests: [not_null]
+      - name: is_duplicated_file
+        tests: [not_null]
+      - name: is_duplicated_version
+        tests: [not_null]
+
+  - name: film_rejected
+    description: "Rejected film records (duplicates)."
+
+  # --- PAYMENT ---
+  - name: payment_tmp
+    config:
+      materialized: incremental
+      incremental_strategy: append
+      schema: bronze
+    columns:
+      - name: payment_id
+        tests: [not_null]
+      - name: is_duplicated_file
+        tests: [not_null]
+      - name: is_duplicated_version
+        tests: [not_null]
+
+  - name: payment_rejected
+    description: "Rejected payment records."
+
+  # --- CUSTOMER ---
+  - name: customer_tmp
+    config:
+      materialized: incremental
+      incremental_strategy: append
+      schema: bronze
+    columns:
+      - name: customer_id
+        tests: [not_null]
+      - name: is_duplicated_file
+        tests: [not_null]
+      - name: is_duplicated_version
+        tests: [not_null]
+
+  - name: customer_rejected
+    description: "Rejected customer records."
+
+  # --- STAFF ---
+  - name: staff_tmp
+    config:
+      materialized: incremental
+      incremental_strategy: append
+      schema: bronze
+    columns:
+      - name: staff_id
+        tests: [not_null]
+      - name: is_duplicated_file
+        tests: [not_null]
+      - name: is_duplicated_version
+        tests: [not_null]
+
+  - name: staff_rejected
+    description: "Rejected staff records."
+
+  # --- ADDRESS ---
+  - name: address_tmp
+    config:
+      materialized: incremental
+      incremental_strategy: append
+      schema: bronze
+    columns:
+      - name: address_id
+        tests: [not_null]
+      - name: is_duplicated_file
+        tests: [not_null]
+      - name: is_duplicated_version
+        tests: [not_null]
+
+  - name: address_rejected
+    description: "Rejected address records."
+
+  # --- RENTAL ---
+  - name: rental_tmp
+    config:
+      materialized: incremental
+      incremental_strategy: append
+      schema: bronze
+    columns:
+      - name: rental_id
+        tests: [not_null]
+      - name: is_duplicated_file
+        tests: [not_null]
+      - name: is_duplicated_version
+        tests: [not_null]
+
+  - name: rental_rejected
+    description: "Rejected rental records."
+
+  # --- ACTOR ---
+  - name: actor_tmp
+    config:
+      materialized: incremental
+      incremental_strategy: append
+      schema: bronze
+    columns:
+      - name: actor_id
+        tests: [not_null]
+      - name: is_duplicated_file
+        tests: [not_null]
+      - name: is_duplicated_version
+        tests: [not_null]
+
+  - name: actor_rejected
+    description: "Rejected actor records."
+
+  # --- INVENTORY ---
+  - name: inventory_tmp
+    config:
+      materialized: incremental
+      incremental_strategy: append
+      schema: bronze
+    columns:
+      - name: inventory_id
+        tests: [not_null]
+      - name: is_duplicated_file
+        tests: [not_null]
+      - name: is_duplicated_version
+        tests: [not_null]
+
+  - name: inventory_rejected
+    description: "Rejected inventory records."
+
+  # --- FILM_CATEGORY ---
+  - name: film_category_tmp
+    config:
+      materialized: incremental
+      incremental_strategy: append
+      schema: bronze
+    columns:
+      - name: film_id
+        tests: [not_null]
+      - name: category_id
+        tests: [not_null]
+      - name: is_duplicated_file
+        tests: [not_null]
+      - name: is_duplicated_version
+        tests: [not_null]
+
+  - name: film_category_rejected
+    description: "Rejected film/category mapping records."
+
+  # --- FILM_ACTOR ---
+  - name: film_actor_tmp
+    config:
+      materialized: incremental
+      incremental_strategy: append
+      schema: bronze
+    columns:
+      - name: film_id
+        tests: [not_null]
+      - name: actor_id
+        tests: [not_null]
+      - name: is_duplicated_file
+        tests: [not_null]
+      - name: is_duplicated_version
+        tests: [not_null]
+
+  - name: film_actor_rejected
+    description: "Rejected film/actor mapping records."
+
+  # --- STORE ---
+  - name: store_tmp
+    config:
+      materialized: incremental
+      incremental_strategy: append
+      schema: bronze
+    columns:
+      - name: store_id
+        tests: [not_null]
+      - name: is_duplicated_file
+        tests: [not_null]
+      - name: is_duplicated_version
+        tests: [not_null]
+
+  - name: store_rejected
+    description: "Rejected store records."
+
+  # --- CITY ---
+  - name: city_tmp
+    config:
+      materialized: incremental
+      incremental_strategy: append
+      schema: bronze
+    columns:
+      - name: city_id
+        tests: [not_null]
+      - name: is_duplicated_file
+        tests: [not_null]
+      - name: is_duplicated_version
+        tests: [not_null]
+
+  - name: city_rejected
+    description: "Rejected city records."
+
+  # --- COUNTRY ---
+  - name: country_tmp
+    config:
+      materialized: incremental
+      incremental_strategy: append
+      schema: bronze
+    columns:
+      - name: country_id
+        tests: [not_null]
+      - name: is_duplicated_file
+        tests: [not_null]
+      - name: is_duplicated_version
+        tests: [not_null]
+
+  - name: country_rejected
+    description: "Rejected country records."
+
+  # --- LANGUAGE ---
+  - name: language_tmp
+    config:
+      materialized: incremental
+      incremental_strategy: append
+      schema: bronze
+    columns:
+      - name: language_id
+        tests: [not_null]
+      - name: is_duplicated_file
+        tests: [not_null]
+      - name: is_duplicated_version
+        tests: [not_null]
+
+  - name: language_rejected
+    description: "Rejected language records."

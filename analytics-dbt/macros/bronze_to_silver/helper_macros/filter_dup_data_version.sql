@@ -1,4 +1,4 @@
-{%- macro filter_dup_data_version(source, join_table, unique_key, standard_cols) -%}
+{% macro filter_dup_data_version(source, join_table, unique_key, standard_cols) %}
 SELECT 
     cs.{{ unique_key }},
     {% for col in standard_cols -%}
@@ -13,4 +13,4 @@ SELECT
 FROM {{ source }} cs
 LEFT JOIN {{ join_table }} t
     ON cs.{{ unique_key }} = t.{{ unique_key }} AND t.is_current = TRUE
-{%- endmacro -%}
+{% endmacro %}
