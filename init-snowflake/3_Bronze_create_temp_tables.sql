@@ -1,3 +1,5 @@
+USE ROLE ACCOUNTADMIN;
+
 CREATE OR REPLACE TRANSIENT TABLE dvd_rental.bronze.category_tmp (
     category_id             INTEGER,
     category_name           VARCHAR,
@@ -23,7 +25,7 @@ CREATE OR REPLACE TRANSIENT TABLE dvd_rental.bronze.film_category_tmp (
 CREATE OR REPLACE TRANSIENT TABLE dvd_rental.bronze.film_tmp (
     film_id                 INTEGER,
     title                   VARCHAR,
-    description             VARCHAR,
+    film_description        VARCHAR,
     release_year            INTEGER,
     language_id             INTEGER,
     rental_duration         FLOAT,
@@ -32,7 +34,7 @@ CREATE OR REPLACE TRANSIENT TABLE dvd_rental.bronze.film_tmp (
     replacement_cost        FLOAT,
     rating                  VARCHAR,
     special_features        VARCHAR,
-    fulltext                VARCHAR,
+    film_fulltext                VARCHAR,
     file_name               VARCHAR,
     valid_from              TIMESTAMPNTZ,
     is_duplicated_version   BOOLEAN,

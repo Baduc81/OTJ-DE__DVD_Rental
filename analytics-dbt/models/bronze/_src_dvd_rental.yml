@@ -1,0 +1,36 @@
+sources:
+  - name: dvd_rental
+    database: dvd_rental
+    schema: bronze
+    description: "Source data for DVD Rental database in Bronze layer"
+    tables:
+      - name: actor
+        description: "Table containing actor information"
+      - name: address
+        description: "Table containing address information"
+      - name: category
+        description: "Table containing category information"
+      - name: city
+        description: "Table containing city information"
+      - name: country
+        description: "Table containing country information"
+      - name: customer
+        description: "Table containing customer information"
+      - name: film
+        description: "Table containing film information"
+      - name: film_actor
+        description: "Table linking films to actors"
+      - name: film_category
+        description: "Table linking films to categories"
+      - name: inventory
+        description: "Table containing inventory information"
+      - name: language
+        description: "Table containing language information"
+      - name: payment
+        description: "Table containing payment information"
+      - name: rental
+        description: "Table containing rental information"
+      - name: staff
+        description: "Table containing staff information"
+      - name: store
+        description: "Table containing store information"
