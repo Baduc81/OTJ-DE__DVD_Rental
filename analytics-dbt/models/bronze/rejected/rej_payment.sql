@@ -11,6 +11,6 @@ SELECT
     amount,
     valid_from,
     file_name
-FROM {{ ref("payment_tmp") }}
+FROM {{ ref("tmp_payment") }}
 WHERE is_duplicated_file = TRUE
     OR is_duplicated_version = TRUE

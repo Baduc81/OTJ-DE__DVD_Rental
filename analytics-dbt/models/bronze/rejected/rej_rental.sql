@@ -12,6 +12,6 @@ SELECT
     staff_id,
     file_name,
     valid_from
-FROM {{ ref("rental_tmp") }}
+FROM {{ ref("tmp_rental") }}
 WHERE is_duplicated_file = TRUE
     OR is_duplicated_version = TRUE

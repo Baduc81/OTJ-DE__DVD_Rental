@@ -17,4 +17,4 @@
     standard_cols=standard_cols
 ) -}}
 
-SELECT * FROM {{ ref("address_tmp") }}
+SELECT * FROM {{ ref("tmp_address") }}

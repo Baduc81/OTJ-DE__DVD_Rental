@@ -9,6 +9,6 @@ SELECT
     category_id,
     file_name,
     valid_from
-FROM {{ ref("film_category_tmp") }}
+FROM {{ ref("tmp_film_category") }}
 WHERE is_duplicated_version = TRUE
     OR is_duplicated_file = TRUE

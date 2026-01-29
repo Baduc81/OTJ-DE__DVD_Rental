@@ -18,6 +18,6 @@ SELECT
     film_fulltext,
     file_name,
     valid_from
-FROM {{ ref("film_tmp") }}
+FROM {{ ref("tmp_film") }}
 WHERE is_duplicated_file = TRUE
     OR is_duplicated_version = TRUE
