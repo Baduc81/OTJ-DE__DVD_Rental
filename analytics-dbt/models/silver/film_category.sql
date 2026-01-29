@@ -4,7 +4,7 @@
     "valid_from"
 ] -%}
 
-{%- set unique_key = "film_id || '-' || category_id" -%}
+{%- set unique_key = "film_category_id" -%}
 
 {{- config(
     materialized="incremental",

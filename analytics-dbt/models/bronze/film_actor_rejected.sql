@@ -4,6 +4,7 @@
 ) -}}
 
 SELECT
+    film_actor_id,
     actor_id,
     film_id,
     file_name,

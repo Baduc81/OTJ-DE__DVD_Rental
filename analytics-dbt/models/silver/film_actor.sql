@@ -4,7 +4,7 @@
     "valid_from"
 ] -%}
 
-{%- set unique_key = "actor_id || '-' || film_id" -%}
+{%- set unique_key = "film_actor_id" -%}
 
 {{- config(
     materialized="incremental",

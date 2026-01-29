@@ -4,6 +4,7 @@
 ) -}}
 
 SELECT 
+    film_category_id,
     film_id,
     category_id,
     file_name,
