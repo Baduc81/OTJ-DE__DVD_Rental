@@ -1,0 +1,107 @@
+version: 2
+
+models:
+  - name: rej_category
+    config:
+      alias: category_rejected
+      materialized: incremental
+      incremental_strategy: append
+      schema: bronze
+
+  - name: rej_film
+    config:
+      alias: film_rejected
+      materialized: incremental
+      incremental_strategy: append
+      schema: bronze
+
+  - name: rej_payment
+    config:
+      alias: payment_rejected
+      materialized: incremental
+      incremental_strategy: append
+      schema: bronze
+
+  - name: rej_customer
+    config:
+      alias: customer_rejected
+      materialized: incremental
+      incremental_strategy: append
+      schema: bronze
+
+  - name: rej_staff
+    config:
+      alias: staff_rejected
+      materialized: incremental
+      incremental_strategy: append
+      schema: bronze
+
+  - name: rej_address
+    config:
+      alias: address_rejected
+      materialized: incremental
+      incremental_strategy: append
+      schema: bronze
+
+  - name: rej_rental
+    config:
+      alias: rental_rejected
+      materialized: incremental
+      incremental_strategy: append
+      schema: bronze
+
+  - name: rej_actor
+    config:
+      alias: actor_rejected
+      materialized: incremental
+      incremental_strategy: append
+      schema: bronze
+
+  - name: rej_inventory
+    config:
+      alias: inventory_rejected
+      materialized: incremental
+      incremental_strategy: append
+      schema: bronze
+
+  - name: rej_film_category
+    config:
+      alias: film_category_rejected
+      materialized: incremental
+      incremental_strategy: append
+      schema: bronze
+
+  - name: rej_film_actor
+    config:
+      alias: film_actor_rejected
+      materialized: incremental
+      incremental_strategy: append
+      schema: bronze
+
+  - name: rej_store
+    config:
+      alias: store_rejected
+      materialized: incremental
+      incremental_strategy: append
+      schema: bronze
+
+  - name: rej_city
+    config:
+      alias: city_rejected
+      materialized: incremental
+      incremental_strategy: append
+      schema: bronze
+
+  - name: rej_country
+    config:
+      alias: country_rejected
+      materialized: incremental
+      incremental_strategy: append
+      schema: bronze
+
+  - name: rej_language
+    config:
+      alias: language_rejected
+      materialized: incremental
+      incremental_strategy: append
+      schema: bronze

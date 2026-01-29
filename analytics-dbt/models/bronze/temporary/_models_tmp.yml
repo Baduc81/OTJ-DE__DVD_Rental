@@ -1,8 +1,9 @@
 version: 2
 
 models:
-  - name: category_tmp
+  - name: tmp_category
     config:
+      alias: category_tmp
       materialized: incremental
       incremental_strategy: append
       schema: bronze
@@ -17,8 +18,9 @@ models:
       - name: is_duplicated_version
         tests: [not_null]
 
-  - name: film_tmp
+  - name: tmp_film
     config:
+      alias: film_tmp
       materialized: incremental
       incremental_strategy: append
       schema: bronze
@@ -33,8 +35,9 @@ models:
       - name: is_duplicated_version
         tests: [not_null]
 
-  - name: payment_tmp
+  - name: tmp_payment
     config:
+      alias: payment_tmp
       materialized: incremental
       incremental_strategy: append
       schema: bronze
@@ -46,8 +49,9 @@ models:
       - name: is_duplicated_version
         tests: [not_null]
 
-  - name: customer_tmp
+  - name: tmp_customer
     config:
+      alias: customer_tmp
       materialized: incremental
       incremental_strategy: append
       schema: bronze
@@ -59,8 +63,9 @@ models:
       - name: is_duplicated_version
         tests: [not_null]
 
-  - name: staff_tmp
+  - name: tmp_staff
     config:
+      alias: staff_tmp
       materialized: incremental
       incremental_strategy: append
       schema: bronze
@@ -72,8 +77,9 @@ models:
       - name: is_duplicated_version
         tests: [not_null]
 
-  - name: address_tmp
+  - name: tmp_address
     config:
+      alias: address_tmp
       materialized: incremental
       incremental_strategy: append
       schema: bronze
@@ -85,8 +91,9 @@ models:
       - name: is_duplicated_version
         tests: [not_null]
 
-  - name: rental_tmp
+  - name: tmp_rental
     config:
+      alias: rental_tmp
       materialized: incremental
       incremental_strategy: append
       schema: bronze
@@ -98,8 +105,9 @@ models:
       - name: is_duplicated_version
         tests: [not_null]
 
-  - name: actor_tmp
+  - name: tmp_actor
     config:
+      alias: actor_tmp
       materialized: incremental
       incremental_strategy: append
       schema: bronze
@@ -111,8 +119,9 @@ models:
       - name: is_duplicated_version
         tests: [not_null]
 
-  - name: inventory_tmp
+  - name: tmp_inventory
     config:
+      alias: inventory_tmp
       materialized: incremental
       incremental_strategy: append
       schema: bronze
@@ -124,8 +133,9 @@ models:
       - name: is_duplicated_version
         tests: [not_null]
 
-  - name: film_category_tmp
+  - name: tmp_film_category
     config:
+      alias: film_category_tmp
       materialized: incremental
       incremental_strategy: append
       schema: bronze
@@ -139,8 +149,9 @@ models:
       - name: is_duplicated_version
         tests: [not_null]
 
-  - name: film_actor_tmp
+  - name: tmp_film_actor
     config:
+      alias: film_actor_tmp
       materialized: incremental
       incremental_strategy: append
       schema: bronze
@@ -154,8 +165,9 @@ models:
       - name: is_duplicated_version
         tests: [not_null]
 
-  - name: store_tmp
+  - name: tmp_store
     config:
+      alias: store_tmp
       materialized: incremental
       incremental_strategy: append
       schema: bronze
@@ -167,8 +179,9 @@ models:
       - name: is_duplicated_version
         tests: [not_null]
 
-  - name: city_tmp
+  - name: tmp_city
     config:
+      alias: city_tmp
       materialized: incremental
       incremental_strategy: append
       schema: bronze
@@ -180,8 +193,9 @@ models:
       - name: is_duplicated_version
         tests: [not_null]
 
-  - name: country_tmp
+  - name: tmp_country
     config:
+      alias: country_tmp
       materialized: incremental
       incremental_strategy: append
       schema: bronze
@@ -193,8 +207,9 @@ models:
       - name: is_duplicated_version
         tests: [not_null]
 
-  - name: language_tmp
+  - name: tmp_language
     config:
+      alias: language_tmp
       materialized: incremental
       incremental_strategy: append
       schema: bronze
