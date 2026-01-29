@@ -13,6 +13,6 @@ SELECT
     phone,
     file_name,
     valid_from
-FROM {{ ref("address_tmp") }}
+FROM {{ ref("tmp_address") }}
 WHERE is_duplicated_file = TRUE
     OR is_duplicated_version = TRUE

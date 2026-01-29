@@ -19,4 +19,4 @@
     standard_cols=standard_cols
 ) -}}
 
-SELECT * FROM {{ ref("customer_tmp") }}
+SELECT * FROM {{ ref("tmp_customer") }}

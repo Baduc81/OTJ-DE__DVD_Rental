@@ -9,6 +9,6 @@ SELECT
     last_name,
     file_name,
     valid_from
-FROM {{ ref("actor_tmp") }}
+FROM {{ ref("tmp_actor") }}
 WHERE is_duplicated_file = TRUE
     OR is_duplicated_version = TRUE

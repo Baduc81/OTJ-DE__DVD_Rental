@@ -13,4 +13,4 @@
     standard_cols=standard_cols
 ) -}}
 
-SELECT * FROM {{ ref("inventory_tmp") }}
+SELECT * FROM {{ ref("tmp_inventory") }}

@@ -15,4 +15,4 @@
     standard_cols=standard_cols
 ) -}}
 
-SELECT * FROM {{ ref("payment_tmp") }}
+SELECT * FROM {{ ref("tmp_payment") }}

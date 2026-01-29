@@ -13,4 +13,4 @@
     standard_cols=standard_cols
 ) -}}
 
-SELECT * FROM {{ ref("film_actor_tmp") }}
+SELECT * FROM {{ ref("tmp_film_actor") }}

@@ -16,6 +16,6 @@ SELECT
     picture,
     file_name,
     valid_from
-FROM {{ ref("staff_tmp") }}
+FROM {{ ref("tmp_staff") }}
 WHERE is_duplicated_file = TRUE
     OR is_duplicated_version = TRUE

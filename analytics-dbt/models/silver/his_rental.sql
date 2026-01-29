@@ -16,4 +16,4 @@
     standard_cols=standard_cols
 ) -}}
 
-SELECT * FROM {{ ref("rental_tmp") }}
+SELECT * FROM {{ ref("tmp_rental") }}

@@ -19,4 +19,4 @@
     standard_cols=standard_cols
 ) -}}
 
-SELECT * FROM {{ ref("staff_tmp") }}
+SELECT * FROM {{ ref("tmp_staff") }}
