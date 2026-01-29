@@ -1,0 +1,1 @@
+select * from dvd_rental.silver.customer;
