@@ -17,6 +17,7 @@ CREATE OR REPLACE TABLE dvd_rental.bronze.category (
 
 
 CREATE OR REPLACE TABLE dvd_rental.bronze.film_category (
+    film_category_id    VARCHAR,
     film_id             INTEGER,
     category_id         INTEGER,
     valid_from          TIMESTAMP_NTZ,
@@ -55,6 +56,7 @@ CREATE OR REPLACE TABLE dvd_rental.bronze.payment (
 
 
 CREATE OR REPLACE TABLE dvd_rental.bronze.film_actor (
+    film_actor_id      VARCHAR,
     actor_id           INTEGER,
     film_id            INTEGER,
     valid_from         TIMESTAMP_NTZ,
