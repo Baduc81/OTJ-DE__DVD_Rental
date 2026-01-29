@@ -12,4 +12,4 @@
     standard_cols=standard_cols
 ) -}}
 
-SELECT * FROM {{ ref("tmp_languages") }}
+SELECT * FROM {{ ref("tmp_language") }}

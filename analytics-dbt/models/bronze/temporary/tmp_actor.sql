@@ -6,7 +6,7 @@
 ] -%}
 
 {%- set unique_key = "actor_id" -%}
-{%- set join_table = "dvd_rental.silver.actor" -%}
+{%- set join_table = "dvd_rental.silver.his_actor" -%}
 {%- set source = source("bronze", "actor_strm") -%}
 
 WITH add_total_occurrneces_col_cte as (
