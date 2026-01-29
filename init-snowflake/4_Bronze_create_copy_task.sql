@@ -14,8 +14,9 @@ FROM (
     METADATA$FILENAME AS file_name,
     CURRENT_TIMESTAMP() AS load_timestamp
   FROM @dvd_rental.bronze.dvd_rental_stage/category/
-  WHERE METADATA$FILENAME ILIKE '%category%.csv'
-);
+  -- WHERE METADATA$FILENAME ILIKE '%category%.csv'
+)
+ON_ERROR = 'CONTINUE';
 
 -- FILM_CATEGORY
 CREATE OR REPLACE TASK dvd_rental.bronze.film_category_copy_task
@@ -32,8 +33,9 @@ FROM (
     METADATA$FILENAME AS file_name,
     CURRENT_TIMESTAMP() AS load_timestamp
   FROM @dvd_rental.bronze.dvd_rental_stage/film_category/
-  WHERE METADATA$FILENAME ILIKE '%film_category%.csv'
-);
+  -- WHERE METADATA$FILENAME ILIKE '%film_category%.csv'
+)
+ON_ERROR = 'CONTINUE';
 
 -- FILM
 CREATE OR REPLACE TASK dvd_rental.bronze.film_copy_task
@@ -43,7 +45,7 @@ AS
 COPY INTO dvd_rental.bronze.film (
   film_id, title, film_description, release_year, language_id,
   rental_duration, rental_rate, film_length, replacement_cost, rating,
-  valid_from, special_features, fulltext, file_name, load_timestamp
+  valid_from, special_features, film_fulltext, file_name, load_timestamp
 )
 FROM (
   SELECT
@@ -59,12 +61,13 @@ FROM (
     $10 AS rating,
     $11 AS valid_from,
     $12 AS special_features,
-    $13 AS fulltext,
+    $13 AS film_fulltext,
     METADATA$FILENAME AS file_name,
     CURRENT_TIMESTAMP() AS load_timestamp
   FROM @dvd_rental.bronze.dvd_rental_stage/film/
-  WHERE METADATA$FILENAME ILIKE '%film%.csv'
-);
+  -- WHERE METADATA$FILENAME ILIKE '%film%.csv'
+)
+ON_ERROR = 'CONTINUE';
 
 -- PAYMENT
 CREATE OR REPLACE TASK dvd_rental.bronze.payment_copy_task
@@ -83,26 +86,28 @@ FROM (
     METADATA$FILENAME AS file_name,
     CURRENT_TIMESTAMP() AS load_timestamp
   FROM @dvd_rental.bronze.dvd_rental_stage/payment/
-  WHERE METADATA$FILENAME ILIKE '%payment%.csv'
-);
+  -- WHERE METADATA$FILENAME ILIKE '%payment%.csv'
+)
+ON_ERROR = 'CONTINUE';
 
 -- FILM_ACTOR
 CREATE OR REPLACE TASK dvd_rental.bronze.film_actor_copy_task
   WAREHOUSE = compute_wh
   SCHEDULE  = 'USING CRON 0 0 * * * UTC'
 AS
-COPY INTO dvd_rental.bronze.film_actor (actor_id, film_id, valid_from, file_name, load_timestamp)
+COPY INTO dvd_rental.bronze.film_actor (film_actor_id, actor_id, film_id, valid_from, file_name, load_timestamp)
 FROM (
   SELECT
-    CONCAT_WS('-', $1, $2) AS film_category_id,
+    CONCAT_WS('-', $1, $2) AS film_actor_id,
     $1 AS actor_id,
     $2 AS film_id,
     $3 AS valid_from,
     METADATA$FILENAME AS file_name,
     CURRENT_TIMESTAMP() AS load_timestamp
   FROM @dvd_rental.bronze.dvd_rental_stage/film_actor/
-  WHERE METADATA$FILENAME ILIKE '%film_actor%.csv'
-);
+  -- WHERE METADATA$FILENAME ILIKE '%film_actor%.csv'
+)
+ON_ERROR = 'CONTINUE';
 
 -- CUSTOMER
 CREATE OR REPLACE TASK dvd_rental.bronze.customer_copy_task
@@ -128,8 +133,9 @@ FROM (
     METADATA$FILENAME AS file_name,
     CURRENT_TIMESTAMP() AS load_timestamp
   FROM @dvd_rental.bronze.dvd_rental_stage/customer/
-  WHERE METADATA$FILENAME ILIKE '%customer%.csv'
-);
+  -- WHERE METADATA$FILENAME ILIKE '%customer%.csv'
+)
+ON_ERROR = 'CONTINUE';
 
 -- ADDRESS
 CREATE OR REPLACE TASK dvd_rental.bronze.address_copy_task
@@ -153,8 +159,9 @@ FROM (
     METADATA$FILENAME AS file_name,
     CURRENT_TIMESTAMP() AS load_timestamp
   FROM @dvd_rental.bronze.dvd_rental_stage/address/
-  WHERE METADATA$FILENAME ILIKE '%address%.csv'
-);
+  -- WHERE METADATA$FILENAME ILIKE '%address%.csv'
+)
+ON_ERROR = 'CONTINUE';
 
 -- STAFF
 CREATE OR REPLACE TASK dvd_rental.bronze.staff_copy_task
@@ -181,8 +188,9 @@ FROM (
     METADATA$FILENAME AS file_name,
     CURRENT_TIMESTAMP() AS load_timestamp
   FROM @dvd_rental.bronze.dvd_rental_stage/staff/
-  WHERE METADATA$FILENAME ILIKE '%staff%.csv'
-);
+  -- WHERE METADATA$FILENAME ILIKE '%staff%.csv'
+)
+ON_ERROR = 'CONTINUE';
 
 -- CITY
 CREATE OR REPLACE TASK dvd_rental.bronze.city_copy_task
@@ -199,8 +207,9 @@ FROM (
     METADATA$FILENAME AS file_name,
     CURRENT_TIMESTAMP() AS load_timestamp
   FROM @dvd_rental.bronze.dvd_rental_stage/city/
-  WHERE METADATA$FILENAME ILIKE '%city%.csv'
-);
+  -- WHERE METADATA$FILENAME ILIKE '%city%.csv'
+)
+ON_ERROR = 'CONTINUE';
 
 -- COUNTRY
 CREATE OR REPLACE TASK dvd_rental.bronze.country_copy_task
@@ -216,8 +225,9 @@ FROM (
     METADATA$FILENAME AS file_name,
     CURRENT_TIMESTAMP() AS load_timestamp
   FROM @dvd_rental.bronze.dvd_rental_stage/country/
-  WHERE METADATA$FILENAME ILIKE '%country%.csv'
-);
+  -- WHERE METADATA$FILENAME ILIKE '%country%.csv'
+)
+ON_ERROR = 'CONTINUE';
 
 -- ACTOR
 CREATE OR REPLACE TASK dvd_rental.bronze.actor_copy_task
@@ -234,8 +244,9 @@ FROM (
     METADATA$FILENAME AS file_name,
     CURRENT_TIMESTAMP() AS load_timestamp
   FROM @dvd_rental.bronze.dvd_rental_stage/actor/
-  WHERE METADATA$FILENAME ILIKE '%actor%.csv'
-);
+  -- WHERE METADATA$FILENAME ILIKE '%actor%.csv'
+)
+ON_ERROR = 'CONTINUE';
 
 -- RENTAL
 CREATE OR REPLACE TASK dvd_rental.bronze.rental_copy_task
@@ -257,8 +268,9 @@ FROM (
     METADATA$FILENAME AS file_name,
     CURRENT_TIMESTAMP() AS load_timestamp
   FROM @dvd_rental.bronze.dvd_rental_stage/rental/
-  WHERE METADATA$FILENAME ILIKE '%rental%.csv'
-);
+  -- WHERE METADATA$FILENAME ILIKE '%rental%.csv'
+)
+ON_ERROR = 'CONTINUE';
 
 -- LANGUAGE
 CREATE OR REPLACE TASK dvd_rental.bronze.language_copy_task
@@ -274,8 +286,9 @@ FROM (
     METADATA$FILENAME AS file_name,
     CURRENT_TIMESTAMP() AS load_timestamp
   FROM @dvd_rental.bronze.dvd_rental_stage/language/
-  WHERE METADATA$FILENAME ILIKE '%language%.csv'
-);
+  -- WHERE METADATA$FILENAME ILIKE '%language%.csv'
+)
+ON_ERROR = 'CONTINUE';
 
 -- INVENTORY
 CREATE OR REPLACE TASK dvd_rental.bronze.inventory_copy_task
@@ -292,8 +305,9 @@ FROM (
     METADATA$FILENAME AS file_name,
     CURRENT_TIMESTAMP() AS load_timestamp
   FROM @dvd_rental.bronze.dvd_rental_stage/inventory/
-  WHERE METADATA$FILENAME ILIKE '%inventory%.csv'
-);
+  -- WHERE METADATA$FILENAME ILIKE '%inventory%.csv'
+)
+ON_ERROR = 'CONTINUE';
 
 -- STORE
 CREATE OR REPLACE TASK dvd_rental.bronze.store_copy_task
@@ -310,7 +324,8 @@ FROM (
     METADATA$FILENAME AS file_name,
     CURRENT_TIMESTAMP() AS load_timestamp
   FROM @dvd_rental.bronze.dvd_rental_stage/store/
-  WHERE METADATA$FILENAME ILIKE '%store%.csv'
-);
+  -- WHERE METADATA$FILENAME ILIKE '%store%.csv'
+)
+ON_ERROR = 'CONTINUE';
 
 SHOW TASKS IN dvd_rental.bronze;
