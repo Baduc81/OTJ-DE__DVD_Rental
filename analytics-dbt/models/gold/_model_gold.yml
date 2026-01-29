@@ -1,0 +1,143 @@
+version: 2
+
+models:
+  - name: dim_customer
+    config:
+      alias: dim_customer
+      materialized: table
+      schema: gold
+    columns:
+      - name: customer_id
+      - name: first_name
+      - name: last_name
+      - name: email
+      - name: activebool
+      - name: create_date
+      - name: last_update
+      - name: store_id
+        description: "Foreign key to store table - which store the customer created the account"
+      - name: active
+
+  - name: dim_film
+    config:
+      alias: dim_film
+      materialized: table
+      schema: gold
+    columns:
+      - name: film_id
+      - name: title
+      - name: film_description
+      - name: release_year
+      - name: length
+      - name: rating
+      - name: special_features
+      - name: film_fulltext
+      - name: film_category
+      - name: film_language
+      - name: last_update
+
+  - name: dim_address
+    config:
+      alias: dim_address
+      materialized: table
+      schema: gold
+    columns:
+      - name: address_id
+      - name: address
+      - name: address2
+      - name: city
+        description: "Take from city table"
+      - name: country
+        description: "Take from country table"
+      - name: postal_code
+      - name: phone
+      - name: last_update
+
+  - name: dim_store
+    config:
+      alias: dim_store
+      materialized: table
+      schema: gold
+    columns:
+      - name: store_id
+      - name: manager_staff_id
+      - name: last_update
+    
+  - name: dim_staff
+    config:
+      alias: dim_staff
+      materialized: table
+      schema: gold
+    columns:
+      - name: staff_id
+      - name: first_name
+      - name: last_name
+      - name: address_id
+        description: "Not link to dim_address although it takes value from address_id in dim_address"
+      - name: email
+      - name: active
+      - name: store_id
+        description: "Not link to dim_store although it takes value from store_id in dim_store"
+      - name: username
+      - name: staff_password
+      - name: last_update
+      - name: picture
+  
+  - name: dim_actor
+    config:
+      alias: dim_actor
+      materialized: table
+      schema: gold
+    columns:
+      - name: actor_id
+      - name: first_name
+      - name: last_name
+      - name: last_update
+
+  - name: fact_rental
+    description: "Fact table for rental transactions, JOIN with Payment and Inventory table"
+    config:
+      alias: fact_rental
+      materialized: table
+      schema: gold
+    columns:
+      - name: rental_id
+        description: "Primary key for fact_rental table. Take from rental table"
+      - name: rental_date
+        description: "The date and time when the rental started. Take from rental table"
+      - name: customer_id
+        description: "Foreign key to dim_customer table. The customer who rented. Take from rental table"
+      - name: return_date
+        description: "The date and time when the rental was returned. Take from rental table"
+      - name: staff_id
+        description: "Foreign key to dim_staff table. Take from rental table"
+      - name: last_update
+        description: "The last time the record was updated. Take from the newest last_update among rental, payment, inventory tables"
+      
+      - name: payment_id
+        description: "Second primary key for fact_rental table. Take from payment table"
+      - name: customer_payment_id
+        description: "Foreign key to dim_customer table. Take from payment table"
+      - name: staff_id
+        description: "Foreign key to dim_staff table. The staff who processed the payment. Take from payment table"
+      - name: amount
+        description: "The amount paid. Take from payment table"
+      - name: payment_date
+        description: "The date and time when the payment was made. Take from payment table"
+
+      - name: store_id
+        description: "Foreign key to dim_store table. The store where the inventory is located. Take from inventory table"
+      - name: film_id
+        description: "Foreign key to dim_film table. The film that was rented. Take from inventory table"
+      - name: rental_duration
+        description: "The rental duration of the film at the time of rental. Take from film table"
+      - name: rental_rate
+        description: "The rental rate of the film at the time of rental. Take from film table"
+      - name: replacement_cost
+        description: "The replacement cost of the film. Take from film table"
+      - name: actor_id
+        description: "Foreign key to dim_actor table. The main actor of the film. Take from film_actor table"
+      - name: customer_address_id
+        description: "Foreign key to dim_address table. Take from dim_customer table via address_id"
+      - name: store_address_id
+        description: "Foreign key to dim_address table. Take from dim_store table via address_id"
