@@ -3,7 +3,8 @@
     "staff_id",
     "rental_id",
     "amount",
-    "valid_from"
+    "valid_from",
+    "record_hash"
 ] -%}
 
 {%- set unique_key = "payment_id" -%}

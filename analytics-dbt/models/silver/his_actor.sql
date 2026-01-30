@@ -1,7 +1,8 @@
 {%- set standard_cols = [
     "first_name",
     "last_name",
-    "valid_from"
+    "valid_from",
+    "record_hash"
 ] -%}
 
 {%- set unique_key = "actor_id" -%}

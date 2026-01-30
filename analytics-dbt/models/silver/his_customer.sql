@@ -7,7 +7,8 @@
     "activebool",
     "create_date",
     "active",
-    "valid_from"
+    "valid_from",
+    "record_hash"
 ] -%}
 
 {%- set unique_key = "customer_id" -%}

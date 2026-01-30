@@ -1,7 +1,8 @@
 {%- set standard_cols = [
     "film_id",
     "store_id",
-    "valid_from"
+    "valid_from",
+    "record_hash"
 ] -%}
 
 {%- set unique_key = "inventory_id" -%}

@@ -10,7 +10,8 @@
     "rating",
     "special_features",
     "film_fulltext",
-    "valid_from"
+    "valid_from",
+    "record_hash"
 ] -%}
 
 {%- set unique_key = "film_id" -%}

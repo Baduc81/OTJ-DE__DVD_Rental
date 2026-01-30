@@ -4,7 +4,8 @@
     "customer_id",
     "return_date",
     "staff_id",
-    "valid_from"
+    "valid_from",
+    "record_hash"
 ] -%}
 
 {%- set unique_key = "rental_id" -%}

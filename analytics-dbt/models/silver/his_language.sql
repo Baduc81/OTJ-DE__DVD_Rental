@@ -1,6 +1,7 @@
 {%- set standard_cols = [
     "language_name",
-    "valid_from"
+    "valid_from",
+    "record_hash"
 ] -%}
 
 {%- set unique_key = "language_id" -%}

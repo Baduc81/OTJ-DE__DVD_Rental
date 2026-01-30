@@ -12,7 +12,7 @@ models:
       - name: last_name
       - name: email
       - name: activebool
-      - name: create_date
+      - name: created_date
       - name: last_update
       - name: store_id
         description: "Foreign key to store table - which store the customer created the account"
@@ -28,7 +28,7 @@ models:
       - name: title
       - name: film_description
       - name: release_year
-      - name: length
+      - name: film_length
       - name: rating
       - name: special_features
       - name: film_fulltext
