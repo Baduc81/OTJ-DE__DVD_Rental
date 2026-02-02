@@ -174,8 +174,6 @@ models:
         description: "The password of the staff member."
       - name: valid_from
         description: "Timestamp of the last update to the staff record."
-      - name: picture
-        description: "The picture of the staff member."
       - name: file_name
         description: "The source file name from which the record was loaded."
       - name: load_timestamp
