@@ -129,7 +129,6 @@ CREATE OR REPLACE TABLE dvd_rental.silver.staff (
     active        BOOLEAN,
     username      VARCHAR,
     staff_password VARCHAR,
-    picture       VARCHAR,
     valid_from    TIMESTAMPNTZ,
     valid_to      TIMESTAMPNTZ,
     is_current    BOOLEAN,

@@ -90,7 +90,6 @@ CREATE OR REPLACE TABLE dvd_rental.bronze.staff_rejected (
     active          BOOLEAN,
     username        VARCHAR,
     staff_password  VARCHAR,
-    picture         VARCHAR,
     file_name       VARCHAR,
     valid_from      TIMESTAMPNTZ
 );

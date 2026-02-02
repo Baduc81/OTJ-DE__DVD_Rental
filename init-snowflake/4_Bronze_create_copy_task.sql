@@ -170,7 +170,7 @@ CREATE OR REPLACE TASK dvd_rental.bronze.staff_copy_task
 AS
 COPY INTO dvd_rental.bronze.staff (
   staff_id, first_name, last_name, address_id, email, store_id,
-  active, username, staff_password, valid_from, picture, file_name, load_timestamp
+  active, username, staff_password, valid_from, file_name, load_timestamp
 )
 FROM (
   SELECT
@@ -184,7 +184,6 @@ FROM (
     $8 AS username,
     $9 AS staff_password,
     $10 AS valid_from,
-    $11 AS picture,
     METADATA$FILENAME AS file_name,
     CURRENT_TIMESTAMP() AS load_timestamp
   FROM @dvd_rental.bronze.dvd_rental_stage/staff/

@@ -110,7 +110,6 @@ CREATE OR REPLACE TRANSIENT TABLE dvd_rental.bronze.staff_tmp (
     active                  BOOLEAN,
     username                VARCHAR,
     staff_password          VARCHAR,
-    picture                 VARCHAR,
     file_name               VARCHAR,
     valid_from              TIMESTAMPNTZ,
     is_duplicated_version   BOOLEAN,

@@ -2,79 +2,79 @@ USE ROLE ACCOUNTADMIN;
 
 -- category / film / bridges
 CREATE OR REPLACE STREAM dvd_rental.bronze.category_strm
-  ON TABLE bronze.category
+  ON TABLE dvd_rental.bronze.category
   APPEND_ONLY = TRUE
   SHOW_INITIAL_ROWS = FALSE;
 
 CREATE OR REPLACE STREAM dvd_rental.bronze.film_strm
-  ON TABLE bronze.film
+  ON TABLE dvd_rental.bronze.film
   APPEND_ONLY = TRUE
   SHOW_INITIAL_ROWS = FALSE;
 
 CREATE OR REPLACE STREAM dvd_rental.bronze.film_category_strm
-  ON TABLE bronze.film_category
+  ON TABLE dvd_rental.bronze.film_category
   APPEND_ONLY = TRUE
   SHOW_INITIAL_ROWS = FALSE;
 
 CREATE OR REPLACE STREAM dvd_rental.bronze.language_strm
-  ON TABLE bronze.language
+  ON TABLE dvd_rental.bronze.language
   APPEND_ONLY = TRUE
   SHOW_INITIAL_ROWS = FALSE;
 
 CREATE OR REPLACE STREAM dvd_rental.bronze.film_actor_strm
-  ON TABLE bronze.film_actor
+  ON TABLE dvd_rental.bronze.film_actor
   APPEND_ONLY = TRUE
   SHOW_INITIAL_ROWS = FALSE;
 
 -- address hierarchy & people
 CREATE OR REPLACE STREAM dvd_rental.bronze.address_strm
-  ON TABLE bronze.address
+  ON TABLE dvd_rental.bronze.address
   APPEND_ONLY = TRUE
   SHOW_INITIAL_ROWS = FALSE;
 
 CREATE OR REPLACE STREAM dvd_rental.bronze.city_strm
-  ON TABLE bronze.city
+  ON TABLE dvd_rental.bronze.city
   APPEND_ONLY = TRUE
   SHOW_INITIAL_ROWS = FALSE;
 
 CREATE OR REPLACE STREAM dvd_rental.bronze.country_strm
-  ON TABLE bronze.country
+  ON TABLE dvd_rental.bronze.country
   APPEND_ONLY = TRUE
   SHOW_INITIAL_ROWS = FALSE;
 
 CREATE OR REPLACE STREAM dvd_rental.bronze.customer_strm
-  ON TABLE bronze.customer
+  ON TABLE dvd_rental.bronze.customer
   APPEND_ONLY = TRUE
   SHOW_INITIAL_ROWS = FALSE;
 
 CREATE OR REPLACE STREAM dvd_rental.bronze.actor_strm
-  ON TABLE bronze.actor
+  ON TABLE dvd_rental.bronze.actor
   APPEND_ONLY = TRUE
   SHOW_INITIAL_ROWS = FALSE;
 
 CREATE OR REPLACE STREAM dvd_rental.bronze.staff_strm
-  ON TABLE bronze.staff
+  ON TABLE dvd_rental.bronze.staff
   APPEND_ONLY = TRUE
   SHOW_INITIAL_ROWS = FALSE;
 
 -- store & inventory & transactions
 CREATE OR REPLACE STREAM dvd_rental.bronze.store_strm
-  ON TABLE bronze.store
+  ON TABLE dvd_rental.bronze.store
   APPEND_ONLY = TRUE
   SHOW_INITIAL_ROWS = FALSE;
 
 CREATE OR REPLACE STREAM dvd_rental.bronze.inventory_strm
-  ON TABLE bronze.inventory
+  ON TABLE dvd_rental.bronze.inventory
   APPEND_ONLY = TRUE
   SHOW_INITIAL_ROWS = FALSE;
 
 CREATE OR REPLACE STREAM dvd_rental.bronze.rental_strm
-  ON TABLE bronze.rental
+  ON TABLE dvd_rental.bronze.rental
   APPEND_ONLY = TRUE
   SHOW_INITIAL_ROWS = FALSE;
 
 CREATE OR REPLACE STREAM dvd_rental.bronze.payment_strm
-  ON TABLE bronze.payment
+  ON TABLE dvd_rental.bronze.payment
   APPEND_ONLY = TRUE
   SHOW_INITIAL_ROWS = FALSE;
 
