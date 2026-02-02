@@ -57,3 +57,24 @@ models:
 
     reporting:
       +tags: ['reporting']
+
+on-run-end:
+  - >
+    {{ truncate_temp_tables([
+        ref('tmp_actor'),
+        ref('tmp_address'),
+        ref('tmp_category'),
+        ref('tmp_city'),
+        ref('tmp_country'),
+        ref('tmp_customer'),
+        ref('tmp_film_actor'),
+        ref('tmp_film_category'),
+        ref('tmp_film'),
+        ref('tmp_inventory'),
+        ref('tmp_language'),
+        ref('tmp_payment'),
+        ref('tmp_rental'),
+        ref('tmp_staff'),
+        ref('tmp_store')
+    ]) }}
+  
