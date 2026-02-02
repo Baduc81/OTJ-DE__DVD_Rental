@@ -144,9 +144,6 @@ CREATE OR REPLACE TABLE dvd_rental.silver.city (
     city        VARCHAR,
     country_id  INTEGER,
     valid_from  TIMESTAMPNTZ,
-    valid_to    TIMESTAMPNTZ,
-    is_current  BOOLEAN,
-    is_delete   BOOLEAN,
     record_hash VARCHAR
 );
 
@@ -157,9 +154,6 @@ CREATE OR REPLACE TABLE dvd_rental.silver.country (
     country_id  INTEGER,
     country     VARCHAR,
     valid_from  TIMESTAMPNTZ,
-    valid_to    TIMESTAMPNTZ,
-    is_current  BOOLEAN,
-    is_delete   BOOLEAN,
     record_hash VARCHAR
 );
 
