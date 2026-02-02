@@ -1,4 +1,8 @@
 {% macro filter_dup_data_within_file(source) %}
+
+---purpose: to dedup rows in source
+---source: a table
+
 SELECT 
     *,
     CASE 
