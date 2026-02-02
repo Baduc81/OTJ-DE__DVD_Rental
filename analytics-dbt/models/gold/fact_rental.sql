@@ -39,6 +39,7 @@ rental_payment_inventory AS (
 ),
 film_actor AS (
     SELECT 
+        film.film_id,
         film.rental_duration,
         film.rental_rate,
         film.replacement_cost,
@@ -68,7 +69,8 @@ rental_payment_inventory_film AS (
         film.actor_id,
         GREATEST(rpi.last_update, film.last_update) as last_update
     FROM rental_payment_inventory AS rpi
-    LEFT JOIN film_actor as film
+    LEFT JOIN film_actor as film ON rpi.film_id = film.film_id
+    -- No need to check condition "is_current = true" because We've already checked it in above table
 ),
 rental_payment_inventory_film_customer_address AS (
     SELECT 
