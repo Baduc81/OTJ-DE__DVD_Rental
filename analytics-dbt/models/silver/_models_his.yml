@@ -173,6 +173,16 @@ models:
     columns:
       - name: city_id
         # tests: [not_null]
+      - name: city
+        # tests: [not null]
+      - name: country_id
+        # tests: [not null]
+      - name: valid_from
+        # tests: [not null]
+      - name: valid_to
+        # tests: [not null]
+      - name: is_delete
+        # tests: [not null]
       - name: record_hash
         # tests: [not_null]
       - name: is_current
@@ -186,9 +196,17 @@ models:
     columns:
       - name: country_id
         # tests: [not_null]
+      - name: country
+        # tests: [not_null]
+      - name: valid_from
+        # tests: [not_null]
+      - name: valid_to
+        # tests: [not_null]
       - name: record_hash
         # tests: [not_null]
       - name: is_current
+        # tests: [not_null]
+      - name: is_delete
         # tests: [not_null]
 
   - name: his_language

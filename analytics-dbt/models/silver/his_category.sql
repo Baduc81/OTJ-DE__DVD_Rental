@@ -1,6 +1,7 @@
 {%- set standard_cols = [
     "category_name",
-    "valid_from"
+    "valid_from",
+    "record_hash"
 ] -%}
 
 {%- set unique_key = "category_id" -%}

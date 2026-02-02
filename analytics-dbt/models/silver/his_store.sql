@@ -1,7 +1,8 @@
 {%- set standard_cols = [
     "manager_staff_id",
     "address_id",
-    "valid_from"
+    "valid_from",
+    "record_hash"
 ] -%}
 
 {%- set unique_key = "store_id" -%}

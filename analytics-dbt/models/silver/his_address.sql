@@ -5,7 +5,8 @@
     "city_id",
     "postal_code",
     "phone",
-    "valid_from"
+    "valid_from",
+    "record_hash"
 ] -%}
 
 {%- set unique_key = "address_id" -%}
