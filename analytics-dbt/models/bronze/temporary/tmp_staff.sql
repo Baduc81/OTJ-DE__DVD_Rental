@@ -7,14 +7,15 @@
     "active",
     "username",
     "staff_password",
-    "picture",
     "valid_from",
     "file_name"
 ] -%}
 
 {%- set unique_key = "staff_id" -%}
 {%- set join_table = "dvd_rental.silver.staff" -%}
-{%- set source = source("bronze", "staff_strm") -%}
+{#- set source = source("bronze", "staff_strm") -#}
+{%- set source = ref("stg_staff") -%}
+
 
 WITH add_total_occurrneces_col_cte as (
     {{ add_total_occurrneces_col(source, standard_cols, unique_key) }}

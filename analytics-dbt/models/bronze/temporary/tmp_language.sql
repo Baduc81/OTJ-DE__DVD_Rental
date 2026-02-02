@@ -6,7 +6,9 @@
 
 {%- set unique_key = "language_id" -%}
 {%- set join_table = "dvd_rental.silver.language" -%}
-{%- set source = source("bronze", "language_strm") -%}
+{#- set source = source("bronze", "language_strm") -#}
+{%- set source = ref("stg_language") -%}
+
 
 WITH add_total_occurrneces_col_cte as (
     {{ add_total_occurrneces_col(source, standard_cols, unique_key) }}

@@ -7,7 +7,8 @@
 
 {%- set unique_key = "film_actor_id" -%}
 {%- set join_table = "dvd_rental.silver.film_actor" -%}
-{%- set source = source("bronze", "film_actor_strm") -%}
+{#- set source = source("bronze", "film_actor_strm") -#}
+{%- set source = ref("stg_film_actor") -%}
 
 WITH add_total_occurrneces_col_cte as (
     {{ add_total_occurrneces_col(source, standard_cols, unique_key) }}

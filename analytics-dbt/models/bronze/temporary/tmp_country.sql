@@ -6,7 +6,9 @@
 
 {%- set unique_key = "country_id" -%}
 {%- set join_table = "dvd_rental.silver.country" -%}
-{%- set source = source("bronze", "country_strm") -%}
+{#- set source = source("bronze", "country_strm") -#}
+{%- set source = ref("stg_country") -%}
+
 
 WITH add_total_occurrneces_col_cte as (
     {{ add_total_occurrneces_col(source, standard_cols, unique_key) }}

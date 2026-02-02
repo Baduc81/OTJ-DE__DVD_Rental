@@ -13,7 +13,8 @@
 
 {%- set unique_key = "customer_id" -%}
 {%- set join_table = "dvd_rental.silver.customer" -%}
-{%- set source = source("bronze", "customer_strm") -%}
+{#- set source = source("bronze", "customer_strm") -#}
+{%- set source = ref("stg_customer") -%}
 
 WITH add_total_occurrneces_col_cte as (
     {{ add_total_occurrneces_col(source, standard_cols, unique_key) }}

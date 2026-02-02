@@ -8,7 +8,6 @@ SELECT
     store_id,
     username,
     staff_password,
-    valid_from as last_update,
-    picture
+    valid_from as last_update
 FROM {{ ref('his_staff') }}
 WHERE is_current = true

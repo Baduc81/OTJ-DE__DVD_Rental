@@ -13,7 +13,6 @@ SELECT
     active,
     username,
     staff_password,
-    picture,
     file_name,
     valid_from
 FROM {{ ref("tmp_staff") }}

@@ -7,7 +7,8 @@
 
 {%- set unique_key = "city_id" -%}
 {%- set join_table = "dvd_rental.silver.city" -%}
-{%- set source = source("bronze", "city_strm") -%}
+{#- set source = source("bronze", "city_strm") -#}
+{%- set source = ref("stg_city") -%}
 
 WITH add_total_occurrneces_col_cte as (
     {{ add_total_occurrneces_col(source, standard_cols, unique_key) }}
