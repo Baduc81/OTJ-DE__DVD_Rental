@@ -15,7 +15,7 @@ WITH rental_payment AS (
     FROM {{ ref('his_rental') }} as rental
     LEFT JOIN {{ ref('his_payment') }} as payment
     ON rental.rental_id = payment.rental_id
-    WHERE rental.is_current = true and payment.is_current = true
+    WHERE rental.is_current = true and (payment.is_current = true or payment.is_current is null)
 ),
 rental_payment_inventory AS (
     SELECT 
@@ -96,7 +96,8 @@ rental_payment_inventory_film_customer_address AS (
     FROM rental_payment_inventory_film AS rpif
     LEFT JOIN {{ ref('his_customer') }} AS customer_rental ON rpif.rental_customer_id = customer_rental.customer_id
     LEFT JOIN {{ ref('his_customer') }} AS customer_payment ON rpif.payment_customer_id = customer_payment.customer_id
-    WHERE customer_rental.is_current = true and customer_payment.is_current = true
+    WHERE (customer_rental.is_current = true or customer_rental.is_current is null) and 
+    (customer_payment.is_current = true or customer_payment.is_current is null)
 ),
 rental_payment_inventory_film_staff_address AS (
     SELECT 
@@ -124,7 +125,8 @@ rental_payment_inventory_film_staff_address AS (
     FROM rental_payment_inventory_film_customer_address AS rpif
     LEFT JOIN {{ ref('his_staff') }} AS staff_rental ON rpif.rental_staff_id = staff_rental.staff_id
     LEFT JOIN {{ ref('his_staff') }} AS staff_payment ON rpif.payment_staff_id = staff_payment.staff_id
-    WHERE staff_rental.is_current = true and staff_payment.is_current = true
+    WHERE (staff_rental.is_current = true or staff_rental.is_current is null) and 
+    (staff_payment.is_current = true or staff_payment.is_current is null)
 ),
 final_table AS (
     SELECT
@@ -153,6 +155,6 @@ final_table AS (
     FROM rental_payment_inventory_film_staff_address AS rpifsa
     LEFT JOIN {{ ref('his_store') }} as store
     ON rpifsa.store_id = store.store_id
-    WHERE store.is_current = true
+    WHERE store.is_current = true or store.is_current is null
 )
 SELECT * FROM final_table
