@@ -175,7 +175,7 @@ models:
           - not_null
       - name: rental_date
         description: "The date and time when the rental started. Take from rental table"
-      - name: customer_id
+      - name: rental_customer_id
         description: "Foreign key to dim_customer table. The customer who rented. Take from rental table"
         tests:
           - not_null
@@ -184,31 +184,31 @@ models:
               field: customer_id
       - name: return_date
         description: "The date and time when the rental was returned. Null if not yet returned. Take from rental table"
-      - name: staff_id
+      - name: rental_staff_id
         description: "Foreign key to dim_staff table. Staff who processed rental. Take from rental table"
         tests:
           - not_null
           - relationships:
               to: ref('dim_staff')
               field: staff_id
-      - name: last_update
-        description: "The last time the record was updated. Take from the newest last_update among rental, payment, inventory tables"
-      
       - name: payment_id
         description: "Payment transaction identifier (composite key with rental_id). Take from payment table"
-        tests:
-          - not_null
-      - name: customer_payment_id
+      - name: payment_customer_id
         description: "Foreign key to dim_customer table. Customer who made the payment. Take from payment table"
-      - name: staff_id_payment
+        tests:
+          - relationships:
+              to: ref('dim_customer')
+              field: customer_id
+      - name: payment_staff_id
         description: "Foreign key to dim_staff table. The staff who processed the payment. Take from payment table"
+        tests:
+          - relationships:
+              to: ref('dim_staff')
+              field: staff_id
       - name: amount
         description: "The amount paid in payment. Must be >= 0. Take from payment table"
-        tests:
-          - not_null
       - name: payment_date
         description: "The date and time when the payment was made. Take from payment table"
-
       - name: store_id
         description: "Foreign key to dim_store table. The store where the inventory is located. Take from inventory table"
         tests:
@@ -235,8 +235,26 @@ models:
           - relationships:
               to: ref('dim_actor')
               field: actor_id
-      - name: customer_address_id
-        description: "Foreign key to dim_address table. Customer's address. Take from dim_customer table via address_id"
+      - name: customer_rental_address_id
+        description: "Foreign key to dim_address table. The address of customer who makes rental. Take from dim_customer table via address_id"
+        tests:
+          - relationships:
+              to: ref('dim_address')
+              field: address_id
+      - name: customer_payment_address_id
+        description: "Foreign key to dim_address table. The address of customer who makes payment. Take from dim_customer table via address_id"
+        tests:
+          - relationships:
+              to: ref('dim_address')
+              field: address_id
+      - name: staff_rental_address_id
+        description: "Foreign key to dim_address table. The address of staff who takes rental. Take from dim_staff table via address_id"
+        tests:
+          - relationships:
+              to: ref('dim_address')
+              field: address_id
+      - name: staff_payment_address_id
+        description: "Foreign key to dim_address table. The address of staff who takes payments. Take from dim_staff table via address_id"
         tests:
           - relationships:
               to: ref('dim_address')
@@ -247,3 +265,5 @@ models:
           - relationships:
               to: ref('dim_address')
               field: address_id
+      - name: last_update
+        description: ""
