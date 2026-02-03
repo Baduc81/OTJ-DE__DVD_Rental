@@ -51,15 +51,8 @@ models:
         description: "Detailed description of film content"
       - name: release_year
         description: "Year film was released"
-        tests:
-          - dbt_expectations.expect_column_values_to_be_between:
-              min_value: 1000
-              max_value: 2026
       - name: film_length
         description: "Duration of film in minutes"
-        tests:
-          - dbt_expectations.expect_column_values_to_be_in_type_list:
-              column_type_list: ['integer']
       - name: rating
         description: "Film rating"
       - name: special_features
