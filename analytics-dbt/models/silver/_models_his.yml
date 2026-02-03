@@ -8,13 +8,7 @@ models:
       schema: silver
     columns:
       - name: category_id
-        # tests: [not_null]
-      - name: category_name
-        # tests: [not_null]
-      - name: record_hash
-        # tests: [not_null]
-      - name: is_current
-        # tests: [not_null]
+        tests: [not_null]
 
   - name: his_film
     config:
@@ -23,13 +17,8 @@ models:
       schema: silver
     columns:
       - name: film_id
-        # tests: [not_null]
-      - name: title
-        # tests: [not_null]
-      - name: record_hash
-        # tests: [not_null]
-      - name: is_current
-        # tests: [not_null]
+        tests: [not_null]
+  
 
   - name: his_payment
     config:
@@ -38,11 +27,7 @@ models:
       schema: silver
     columns:
       - name: payment_id
-        # tests: [not_null]
-      - name: record_hash
-        # tests: [not_null]
-      - name: is_current
-        # tests: [not_null]
+        tests: [not_null]
 
   - name: his_customer
     config:
@@ -51,11 +36,7 @@ models:
       schema: silver
     columns:
       - name: customer_id
-        # tests: [not_null]
-      - name: record_hash
-        # tests: [not_null]
-      - name: is_current
-        # tests: [not_null]
+        tests: [not_null]
 
   - name: his_staff
     config:
@@ -64,11 +45,8 @@ models:
       schema: silver
     columns:
       - name: staff_id
-        # tests: [not_null]
-      - name: record_hash
-        # tests: [not_null]
-      - name: is_current
-        # tests: [not_null]
+        tests: [not_null]
+
 
   - name: his_address
     config:
@@ -77,11 +55,8 @@ models:
       schema: silver
     columns:
       - name: address_id
-        # tests: [not_null]
-      - name: record_hash
-        # tests: [not_null]
-      - name: is_current
-        # tests: [not_null]
+        tests: [not_null]
+
 
   - name: his_rental
     config:
@@ -90,11 +65,7 @@ models:
       schema: silver
     columns:
       - name: rental_id
-        # tests: [not_null]
-      - name: record_hash
-        # tests: [not_null]
-      - name: is_current
-        # tests: [not_null]
+        tests: [not_null]
 
   - name: his_actor
     config:
@@ -103,11 +74,7 @@ models:
       schema: silver
     columns:
       - name: actor_id
-        # tests: [not_null]
-      - name: record_hash
-        # tests: [not_null]
-      - name: is_current
-        # tests: [not_null]
+        tests: [not_null]
 
   - name: his_inventory
     config:
@@ -116,11 +83,7 @@ models:
       schema: silver
     columns:
       - name: inventory_id
-        # tests: [not_null]
-      - name: record_hash
-        # tests: [not_null]
-      - name: is_current
-        # tests: [not_null]
+        tests: [not_null]
 
   - name: his_film_category
     config:
@@ -129,13 +92,17 @@ models:
       schema: silver
     columns:
       - name: film_id
-        # tests: [not_null]
+        tests:
+        - not_null
+        - relationships:
+            to: ref('his_film')
+            field: film_id
       - name: category_id
-        # tests: [not_null]
-      - name: record_hash
-        # tests: [not_null]
-      - name: is_current
-        # tests: [not_null]
+        tests:
+        - not_null
+        - relationships:
+            to: ref('his_category')
+            field: category_id
 
   - name: his_film_actor
     config:
@@ -144,13 +111,17 @@ models:
       schema: silver
     columns:
       - name: film_id
-        # tests: [not_null]
+        tests:
+        - not_null
+        - relationships:
+            to: ref('his_film')
+            field: film_id
       - name: actor_id
-        # tests: [not_null]
-      - name: record_hash
-        # tests: [not_null]
-      - name: is_current
-        # tests: [not_null]
+        tests:
+        - not_null
+        - relationships:
+            to: ref('his_actor')
+            field: actor_id
 
   - name: his_store
     config:
@@ -159,11 +130,7 @@ models:
       schema: silver
     columns:
       - name: store_id
-        # tests: [not_null]
-      - name: record_hash
-        # tests: [not_null]
-      - name: is_current
-        # tests: [not_null]
+        tests: [not_null]
 
   - name: his_city
     config:
@@ -172,21 +139,13 @@ models:
       schema: silver
     columns:
       - name: city_id
-        # tests: [not_null]
-      - name: city
-        # tests: [not null]
+        tests: [not_null]
       - name: country_id
-        # tests: [not null]
-      - name: valid_from
-        # tests: [not null]
-      - name: valid_to
-        # tests: [not null]
-      - name: is_delete
-        # tests: [not null]
-      - name: record_hash
-        # tests: [not_null]
-      - name: is_current
-        # tests: [not_null]
+        tests:
+        - not_null
+        - relationships:
+            to: ref('his_country')
+            field: country_id
 
   - name: his_country
     config:
@@ -195,19 +154,7 @@ models:
       schema: silver
     columns:
       - name: country_id
-        # tests: [not_null]
-      - name: country
-        # tests: [not_null]
-      - name: valid_from
-        # tests: [not_null]
-      - name: valid_to
-        # tests: [not_null]
-      - name: record_hash
-        # tests: [not_null]
-      - name: is_current
-        # tests: [not_null]
-      - name: is_delete
-        # tests: [not_null]
+        tests: [not_null]
 
   - name: his_language
     config:
@@ -216,8 +163,4 @@ models:
       schema: silver
     columns:
       - name: language_id
-        # tests: [not_null]
-      - name: record_hash
-        # tests: [not_null]
-      - name: is_current
-        # tests: [not_null]
+        tests: [not_null]

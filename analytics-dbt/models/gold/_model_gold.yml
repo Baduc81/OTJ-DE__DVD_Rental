@@ -2,142 +2,255 @@ version: 2
 
 models:
   - name: dim_customer
+    description: "Customer dimension table containing customer demographics and status"
     config:
       alias: dim_customer
       materialized: table
       schema: gold
     columns:
       - name: customer_id
+        description: "Unique identifier for customer. Primary key."
+        tests:
+          - not_null
+          - unique
       - name: first_name
+        description: "Customer's first name"
       - name: last_name
+        description: "Customer's last name"
       - name: email
+        description: "Customer's email address"
       - name: activebool
+        description: "Indicates if customer account is active"
       - name: created_date
+        description: "Date when customer account was created"
       - name: last_update
+        description: "Timestamp of last update to customer record"
       - name: store_id
-        description: "Foreign key to store table - which store the customer created the account"
+        description: "Foreign key to dim_store table - which store the customer created the account"
       - name: active
+        description: "Binary indicator of customer status (0=inactive, 1=active)"
+        tests:
+          - accepted_values:
+              values: [0, 1]
 
   - name: dim_film
+    description: "Film dimension table containing film details, categories and language"
     config:
       alias: dim_film
       materialized: table
       schema: gold
     columns:
       - name: film_id
+        description: "Unique identifier for film. Primary key."
+        tests:
+          - not_null
+          - unique
       - name: title
+        description: "Film title"
       - name: film_description
+        description: "Detailed description of film content"
       - name: release_year
+        description: "Year film was released"
+        tests:
+          - dbt_expectations.expect_column_values_to_be_between:
+              min_value: 1000
+              max_value: 2026
       - name: film_length
+        description: "Duration of film in minutes"
+        tests:
+          - dbt_expectations.expect_column_values_to_be_in_type_list:
+              column_type_list: ['integer']
       - name: rating
+        description: "Film rating"
       - name: special_features
+        description: "Special features included with film"
       - name: film_fulltext
+        description: "Full text search field for film"
       - name: film_category
+        description: "Category name of the film"
       - name: film_language
+        description: "Language name of the film"
       - name: last_update
+        description: "Timestamp of last update to film record"
 
   - name: dim_address
+    description: "Address dimension table containing physical location details with city and country"
     config:
       alias: dim_address
       materialized: table
       schema: gold
     columns:
       - name: address_id
+        description: "Unique identifier for address. Primary key."
+        tests:
+          - not_null
+          - unique
       - name: address
+        description: "Street address"
       - name: address2
+        description: "Additional address information (apartment, suite, etc.)"
       - name: city
-        description: "Take from city table"
+        description: "City name. Take from city table"
       - name: country
-        description: "Take from country table"
+        description: "Country name. Take from country table"
       - name: postal_code
+        description: "Postal code for the address"
       - name: phone
+        description: "Phone number associated with address"
       - name: last_update
+        description: "Timestamp of last update to address record"
 
   - name: dim_store
+    description: "Store dimension table containing store information and management details"
     config:
       alias: dim_store
       materialized: table
       schema: gold
     columns:
       - name: store_id
+        description: "Unique identifier for store. Primary key."
+        tests:
+          - not_null
+          - unique
       - name: manager_staff_id
+        description: "Foreign key to dim_staff table - store manager"
       - name: last_update
+        description: "Timestamp of last update to store record"
     
   - name: dim_staff
+    description: "Staff dimension table containing employee information and store assignments"
     config:
       alias: dim_staff
       materialized: table
       schema: gold
     columns:
       - name: staff_id
+        description: "Unique identifier for staff. Primary key."
+        tests:
+          - not_null
+          - unique
       - name: first_name
+        description: "Staff member's first name"
       - name: last_name
+        description: "Staff member's last name"
       - name: address_id
-        description: "Not link to dim_address although it takes value from address_id in dim_address"
+        description: "Foreign key reference to address. Not directly linked to dim_address although it takes value from address_id in dim_address"
       - name: email
+        description: "Staff member's email address"
       - name: active
+        description: "Indicates if staff member is active"
       - name: store_id
-        description: "Not link to dim_store although it takes value from store_id in dim_store"
+        description: "Foreign key reference to store. Not directly linked to dim_store although it takes value from store_id in dim_store"
       - name: username
+        description: "Staff member's login username"
       - name: staff_password
+        description: "Staff member's encrypted password"
       - name: last_update
+        description: "Timestamp of last update to staff record"
       - name: picture
+        description: "Staff member's photograph or image"
   
   - name: dim_actor
+    description: "Actor dimension table containing actor information"
     config:
       alias: dim_actor
       materialized: table
       schema: gold
     columns:
       - name: actor_id
+        description: "Unique identifier for actor. Primary key."
+        tests:
+          - not_null
+          - unique
       - name: first_name
+        description: "Actor's first name"
       - name: last_name
+        description: "Actor's last name"
       - name: last_update
+        description: "Timestamp of last update to actor record"
 
   - name: fact_rental
-    description: "Fact table for rental transactions, JOIN with Payment and Inventory table"
+    description: "Fact table for rental transactions, containing rental, payment, inventory and film details"
     config:
       alias: fact_rental
       materialized: table
       schema: gold
     columns:
       - name: rental_id
-        description: "Primary key for fact_rental table. Take from rental table"
+        description: "Rental transaction identifier (composite key with payment_id). Take from rental table"
+        tests:
+          - not_null
       - name: rental_date
         description: "The date and time when the rental started. Take from rental table"
       - name: customer_id
         description: "Foreign key to dim_customer table. The customer who rented. Take from rental table"
+        tests:
+          - not_null
+          - relationships:
+              to: ref('dim_customer')
+              field: customer_id
       - name: return_date
-        description: "The date and time when the rental was returned. Take from rental table"
+        description: "The date and time when the rental was returned. Null if not yet returned. Take from rental table"
       - name: staff_id
-        description: "Foreign key to dim_staff table. Take from rental table"
+        description: "Foreign key to dim_staff table. Staff who processed rental. Take from rental table"
+        tests:
+          - not_null
+          - relationships:
+              to: ref('dim_staff')
+              field: staff_id
       - name: last_update
         description: "The last time the record was updated. Take from the newest last_update among rental, payment, inventory tables"
       
       - name: payment_id
-        description: "Second primary key for fact_rental table. Take from payment table"
+        description: "Payment transaction identifier (composite key with rental_id). Take from payment table"
+        tests:
+          - not_null
       - name: customer_payment_id
-        description: "Foreign key to dim_customer table. Take from payment table"
-      - name: staff_id
+        description: "Foreign key to dim_customer table. Customer who made the payment. Take from payment table"
+      - name: staff_id_payment
         description: "Foreign key to dim_staff table. The staff who processed the payment. Take from payment table"
       - name: amount
-        description: "The amount paid. Take from payment table"
+        description: "The amount paid in payment. Must be >= 0. Take from payment table"
+        tests:
+          - not_null
       - name: payment_date
         description: "The date and time when the payment was made. Take from payment table"
 
       - name: store_id
         description: "Foreign key to dim_store table. The store where the inventory is located. Take from inventory table"
+        tests:
+          - not_null
+          - relationships:
+              to: ref('dim_store')
+              field: store_id
       - name: film_id
         description: "Foreign key to dim_film table. The film that was rented. Take from inventory table"
+        tests:
+          - not_null
+          - relationships:
+              to: ref('dim_film')
+              field: film_id
       - name: rental_duration
-        description: "The rental duration of the film at the time of rental. Take from film table"
+        description: "The rental duration of the film at the time of rental in days. Take from film table"
       - name: rental_rate
-        description: "The rental rate of the film at the time of rental. Take from film table"
+        description: "The rental rate of the film at the time of rental. Must be >= 0. Take from film table"
       - name: replacement_cost
-        description: "The replacement cost of the film. Take from film table"
+        description: "The replacement cost of the film. Must be >= 0. Take from film table"
       - name: actor_id
         description: "Foreign key to dim_actor table. The main actor of the film. Take from film_actor table"
+        tests:
+          - relationships:
+              to: ref('dim_actor')
+              field: actor_id
       - name: customer_address_id
-        description: "Foreign key to dim_address table. Take from dim_customer table via address_id"
+        description: "Foreign key to dim_address table. Customer's address. Take from dim_customer table via address_id"
+        tests:
+          - relationships:
+              to: ref('dim_address')
+              field: address_id
       - name: store_address_id
-        description: "Foreign key to dim_address table. Take from dim_store table via address_id"
+        description: "Foreign key to dim_address table. Store's address. Take from dim_store table via address_id"
+        tests:
+          - relationships:
+              to: ref('dim_address')
+              field: address_id
