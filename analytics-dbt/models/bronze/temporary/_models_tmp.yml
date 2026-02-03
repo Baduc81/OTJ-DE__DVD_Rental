@@ -10,7 +10,7 @@ models:
     description: "Temporary table for categories with duplicate flagging."
     columns:
       - name: category_id
-        # tests: [not_null]
+        tests: [not_null]
       - name: category_name
         # tests: [not_null]
       - name: is_duplicated_file
@@ -27,7 +27,7 @@ models:
     description: "Temporary table for films with duplicate flagging."
     columns:
       - name: film_id
-        # tests: [not_null]
+        tests: [not_null]
       - name: title
         # tests: [not_null]
       - name: is_duplicated_file
@@ -43,7 +43,7 @@ models:
       schema: bronze
     columns:
       - name: payment_id
-        # tests: [not_null]
+        tests: [not_null]
       - name: is_duplicated_file
         # tests: [not_null]
       - name: is_duplicated_version
@@ -57,7 +57,7 @@ models:
       schema: bronze
     columns:
       - name: customer_id
-        # tests: [not_null]
+        tests: [not_null]
       - name: is_duplicated_file
         # tests: [not_null]
       - name: is_duplicated_version
@@ -71,7 +71,7 @@ models:
       schema: bronze
     columns:
       - name: staff_id
-        # tests: [not_null]
+        tests: [not_null]
       - name: is_duplicated_file
         # tests: [not_null]
       - name: is_duplicated_version
@@ -85,7 +85,7 @@ models:
       schema: bronze
     columns:
       - name: address_id
-        # tests: [not_null]
+        tests: [not_null]
       - name: is_duplicated_file
         # tests: [not_null]
       - name: is_duplicated_version
@@ -99,7 +99,7 @@ models:
       schema: bronze
     columns:
       - name: rental_id
-        # tests: [not_null]
+        tests: [not_null]
       - name: is_duplicated_file
         # tests: [not_null]
       - name: is_duplicated_version
@@ -113,7 +113,7 @@ models:
       schema: bronze
     columns:
       - name: actor_id
-        # tests: [not_null]
+        tests: [not_null]
       - name: is_duplicated_file
         # tests: [not_null]
       - name: is_duplicated_version
@@ -127,7 +127,7 @@ models:
       schema: bronze
     columns:
       - name: inventory_id
-        # tests: [not_null]
+        tests: [not_null]
       - name: is_duplicated_file
         # tests: [not_null]
       - name: is_duplicated_version
@@ -141,9 +141,9 @@ models:
       schema: bronze
     columns:
       - name: film_id
-        # tests: [not_null]
+        tests: [not_null]
       - name: category_id
-        # tests: [not_null]
+        tests: [not_null]
       - name: is_duplicated_file
         # tests: [not_null]
       - name: is_duplicated_version
@@ -157,9 +157,9 @@ models:
       schema: bronze
     columns:
       - name: film_id
-        # tests: [not_null]
+        tests: [not_null]
       - name: actor_id
-        # tests: [not_null]
+        tests: [not_null]
       - name: is_duplicated_file
         # tests: [not_null]
       - name: is_duplicated_version
@@ -173,7 +173,7 @@ models:
       schema: bronze
     columns:
       - name: store_id
-        # tests: [not_null]
+        tests: [not_null]
       - name: is_duplicated_file
         # tests: [not_null]
       - name: is_duplicated_version
@@ -187,7 +187,7 @@ models:
       schema: bronze
     columns:
       - name: city_id
-        # tests: [not_null]
+        tests: [not_null]
       - name: is_duplicated_file
         # tests: [not_null]
       - name: is_duplicated_version
@@ -201,7 +201,7 @@ models:
       schema: bronze
     columns:
       - name: country_id
-        # tests: [not_null]
+        tests: [not_null]
       - name: is_duplicated_file
         # tests: [not_null]
       - name: is_duplicated_version
@@ -215,7 +215,7 @@ models:
       schema: bronze
     columns:
       - name: language_id
-        # tests: [not_null]
+        tests: [not_null]
       - name: is_duplicated_file
         # tests: [not_null]
       - name: is_duplicated_version

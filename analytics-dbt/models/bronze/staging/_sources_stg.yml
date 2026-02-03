@@ -5,32 +5,32 @@ sources:
     description: "Source data for DVD Rental database in Bronze layer"
     tables:
       - name: actor_strm
-        description: "Table containing actor information"
+        description: "Stream containing actor information"
       - name: address_strm
-        description: "Table containing address information"
+        description: "Stream containing address information"
       - name: category_strm
-        description: "Table containing category information"
+        description: "Stream containing category information"
       - name: city_strm
-        description: "Table containing city information"
+        description: "Stream containing city information"
       - name: country_strm
-        description: "Table containing country information"
+        description: "Stream containing country information"
       - name: customer_strm
-        description: "Table containing customer information"
+        description: "Stream containing customer information"
       - name: film_strm
-        description: "Table containing film information"
+        description: "Stream containing film information"
       - name: film_actor_strm
-        description: "Table linking films to actors"
+        description: "Stream linking films to actors"
       - name: film_category_strm
-        description: "Table linking films to categories"
+        description: "Stream linking films to categories"
       - name: inventory_strm
-        description: "Table containing inventory information"
+        description: "Stream containing inventory information"
       - name: language_strm
-        description: "Table containing language information"
+        description: "Stream containing language information"
       - name: payment_strm
-        description: "Table containing payment information"
+        description: "Stream containing payment information"
       - name: rental_strm
-        description: "Table containing rental information"
+        description: "Stream containing rental information"
       - name: staff_strm
-        description: "Table containing staff information"
+        description: "Stream containing staff information"
       - name: store_strm
-        description: "Table containing store information"
+        description: "Stream containing store information"

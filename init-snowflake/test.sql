@@ -1,0 +1,1 @@
+select * from dvd_rental.gold.fact_rental limit 10;
