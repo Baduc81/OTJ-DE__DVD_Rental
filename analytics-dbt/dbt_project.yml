@@ -51,13 +51,7 @@ models:
     +schema: gold
     +materialized: table
     +tags: ['gold']
-
-    marts:
-      +tags: ['mart']
-
-    reporting:
-      +tags: ['reporting']
-
+    
 on-run-end:
   - >
     {{ truncate_temp_tables([
