@@ -24,7 +24,7 @@ jobs:
         uses: actions/setup-python@v6.2.0
         with:
           python-version: '3.11'
-          # cache: 'pip'            # Cache pip dependencies, which means the dependencies installed via pip will be cached between runs. 
+          cache: 'pip'            # Cache pip dependencies, which means the dependencies installed via pip will be cached between runs. 
                                   # As a result, subsequent runs will not need to reinstall all dependencies, speeding up the workflow.
       
       - name: Install dbt and dependencies
