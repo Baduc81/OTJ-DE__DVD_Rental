@@ -12,10 +12,19 @@ on:
     paths:
       - 'analytics-dbt/**'
 
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
 jobs:
   dbt-test:
     runs-on: ubuntu-latest
-    
+    environment: NON-PROD
+    concurrency:
+      group: dbt-test-${{ github.ref }}
+      cancel-in-progress: true
+    permissions:
+      contents: read
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -31,22 +40,53 @@ jobs:
         working-directory: ./analytics-dbt
         run: |
           pip install --upgrade pip
-          pip install -r requirements.txt 2>/dev/null || echo "No requirements.txt found"
-        # "2>/dev/null || echo "No requirements.txt found" is used to suppress error if requirements.txt does not exist.
+          pip install -r requirements.txt
+      
+      - name: Set up dbt profiles
+        run: |
+          mkdir -p ${{ github.workspace }}/.dbt
+          cat <<EOF > ${{ github.workspace }}/.dbt/profiles.yml
+          default:
+            target: dev
+            outputs:
+              dev:
+                type: snowflake
+                threads: 16
+                account: ${{ secrets.DBT_ACCOUNT }}
+                user: ${{ secrets.DBT_USER }}
+                database: ${{ secrets.DBT_DATABASE }}
+                warehouse: ${{ secrets.DBT_WAREHOUSE }}
+                schema: ${{ secrets.DBT_SCHEMA }}
+                password: ${{ secrets.DBT_PASSWORD }}
+                role: ${{ secrets.DBT_ROLE }}
+          EOF
+          chmod 600 ${{ github.workspace }}/.dbt/profiles.yml
+        env:
+          DBT_PROFILES_DIR: ${{ github.workspace }}/.dbt
+
+      - name: Install dbt packages
+        working-directory: ./analytics-dbt
+        run: dbt deps
+        env:
+          DBT_PROFILES_DIR: ${{ github.workspace }}/.dbt
       
       - name: Run dbt parse (validate syntax)
         working-directory: ./analytics-dbt
         run: dbt parse
+        env:
+          DBT_PROFILES_DIR: ${{ github.workspace }}/.dbt
       
       - name: Run dbt tests
         working-directory: ./analytics-dbt
-        run: dbt test --select state:modified+ 
-        # "--select state:modified+" runs tests only on models that have been modified in the current PR or push, including their dependencies (downstream).
-        continue-on-error: true
+        run: dbt test
+        env:
+          DBT_PROFILES_DIR: ${{ github.workspace }}/.dbt
       
       - name: Run dbt docs generate
         working-directory: ./analytics-dbt
         run: dbt docs generate
+        env:
+          DBT_PROFILES_DIR: ${{ github.workspace }}/.dbt
       
       - name: Upload dbt artifacts
         if: always()
@@ -55,4 +95,6 @@ jobs:
         # Uploads the dbt artifacts generated in the analytics-dbt/target/ directory as an artifact of the workflow run.
         with:
           name: dbt-artifacts
-          path: analytics-dbt/target/
+          path: |
+            analytics-dbt/target/manifest.json
+            analytics-dbt/target/run_results.json
