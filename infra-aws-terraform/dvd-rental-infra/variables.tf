@@ -42,3 +42,21 @@ variable "integration_name" {
   type        = string
   default     = "S3_DVD_RENTAL_INTEGRATION"
 }
+
+variable "github_repo" {
+  description = "GitHub repository in org/repo format (used by OIDC trust policy)"
+  type        = string
+  default     = "Baduc81/OTJ-DE__DVD_Rental"
+}
+
+variable "github_ref" {
+  description = "Git ref allowed for GitHub OIDC (e.g., refs/heads/main)"
+  type        = string
+  default     = "refs/heads/main"
+}
+
+variable "github_oidc_thumbprint" {
+  description = "Thumbprint for GitHub Actions OIDC provider"
+  type        = string
+  default     = "6938fd4d98bab03faadb97b34396831e3780aea1"
+}

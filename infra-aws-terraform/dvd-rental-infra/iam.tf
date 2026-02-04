@@ -66,3 +66,49 @@ output "snowflake_role_arn" {
   value       = aws_iam_role.snowflake_role.arn
   description = "ARN of the IAM role for Snowflake"
 }
+
+# GitHub Actions OIDC provider
+resource "aws_iam_openid_connect_provider" "github" {
+  url = "https://token.actions.githubusercontent.com"
+
+  client_id_list = [
+    "sts.amazonaws.com"
+  ]
+
+  thumbprint_list = [
+    var.github_oidc_thumbprint
+  ]
+}
+
+# Separate role for GitHub Actions (does not change Snowflake role)
+resource "aws_iam_role" "github_actions_role" {
+  name               = "github-actions-terraform-role"
+  assume_role_policy = jsonencode({
+    Version = "2012-10-17"
+    Statement = [
+      {
+        Effect = "Allow"
+        Action = "sts:AssumeRoleWithWebIdentity"
+
+        Principal = {
+          Federated = aws_iam_openid_connect_provider.github.arn
+        }
+
+        Condition = {
+          StringEquals = {
+            "token.actions.githubusercontent.com:aud" = "sts.amazonaws.com"
+          }
+
+          StringLike = {
+            "token.actions.githubusercontent.com:sub" = "repo:${var.github_repo}:ref:${var.github_ref}"
+          }
+        }
+      }
+    ]
+  })
+}
+
+output "github_actions_role_arn" {
+  value       = aws_iam_role.github_actions_role.arn
+  description = "ARN of the IAM role for GitHub Actions"
+}
