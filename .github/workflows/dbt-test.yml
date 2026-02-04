@@ -1,0 +1,59 @@
+name: dbt Tests and Validation
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'analytics-dbt/**'
+  pull_request:
+    branches:
+      - main
+    paths:
+      - 'analytics-dbt/**'
+
+jobs:
+  dbt-test:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      
+      - name: Set up Python
+        uses: actions/setup-python@v6.2.0
+        with:
+          python-version: '3.11'
+          cache: 'pip'            # Cache pip dependencies, which means the dependencies installed via pip will be cached between runs. 
+                                  # As a result, subsequent runs will not need to reinstall all dependencies, speeding up the workflow.
+      
+      - name: Install dbt and dependencies
+        working-directory: ./analytics-dbt
+        run: |
+          pip install --upgrade pip
+          pip install dbt-snowflake==1.7.0
+          pip install -r requirements.txt 2>/dev/null || echo "No requirements.txt found"
+        # "2>/dev/null || echo "No requirements.txt found" is used to suppress error if requirements.txt does not exist.
+      
+      - name: Run dbt parse (validate syntax)
+        working-directory: ./analytics-dbt
+        run: dbt parse
+      
+      - name: Run dbt tests
+        working-directory: ./analytics-dbt
+        run: dbt test --select state:modified+ 
+        # "--select state:modified+" runs tests only on models that have been modified in the current PR or push, including their dependencies (downstream).
+        continue-on-error: true
+      
+      - name: Run dbt docs generate
+        working-directory: ./analytics-dbt
+        run: dbt docs generate
+      
+      - name: Upload dbt artifacts
+        if: always()
+        # The "if: always()" condition ensures that this step always runs regardless of the outcome of previous steps.
+        uses: actions/upload-artifact@v6.0.0
+        # Uploads the dbt artifacts generated in the analytics-dbt/target/ directory as an artifact of the workflow run.
+        with:
+          name: dbt-artifacts
+          path: analytics-dbt/target/

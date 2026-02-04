@@ -1,0 +1,49 @@
+name: Terraform Validate and Plan
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'infra-aws-terraform/**'
+  pull_request:
+    branches:
+      - main
+    paths:
+      - 'infra-aws-terraform/**'
+
+env:
+  terraform-version: 1.14.3
+# SQL Linting
+jobs:
+  terraform-validate:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v2.0.3
+        with:
+          terraform_version: ${{ env.terraform-version }}
+      
+      - name: Terraform Format Check
+        working-directory: ./infra-aws-terraform
+        run: terraform fmt -check -recursive
+        continue-on-error: true
+      
+      - name: Terraform Init
+        working-directory: ./infra-aws-terraform
+        run: terraform init -backend=false
+      
+      - name: Terraform Validate
+        working-directory: ./infra-aws-terraform
+        run: terraform validate
+      
+      - name: Terraform Plan (Dev)
+        working-directory: ./infra-aws-terraform/envs/dev
+        run: terraform plan -out=tfplan
+        env:
+          AWS_REGION: us-east-1
+        continue-on-error: true

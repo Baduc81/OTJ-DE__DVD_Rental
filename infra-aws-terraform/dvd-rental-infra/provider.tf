@@ -15,7 +15,7 @@ terraform {
       version = "~> 6.28"
     }
     snowflake = {
-      source = "Snowflake-Labs/snowflake"
+      source  = "Snowflake-Labs/snowflake"
       version = "~> 0.90"
     }
   }
@@ -36,9 +36,9 @@ provider "snowflake" {
   # account  = "your_account"
   # user     = "your_user"
   # password = "your_password"
-  account_name = var.snowflake_account_name
+  account_name      = var.snowflake_account_name
   organization_name = var.snowflake_organization_name
-  user     = var.snowflake_login_name
-  password = var.snowflake_login_password
-  role = "ACCOUNTADMIN"  # Or another role with appropriate privileges
+  user              = var.snowflake_login_name
+  password          = var.snowflake_login_password
+  role              = "ACCOUNTADMIN" # Or another role with appropriate privileges
 }

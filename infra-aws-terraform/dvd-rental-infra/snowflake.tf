@@ -4,8 +4,8 @@ resource "snowflake_storage_integration" "s3_integration" {
   type    = "EXTERNAL_STAGE"
   enabled = true
 
-  storage_provider         = "S3"
-  storage_aws_role_arn     = aws_iam_role.snowflake_role.arn
+  storage_provider          = "S3"
+  storage_aws_role_arn      = aws_iam_role.snowflake_role.arn
   storage_allowed_locations = ["s3://${var.bucket_name}/${var.s3_prefix}"]
 
   depends_on = [

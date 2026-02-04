@@ -1,20 +1,20 @@
 variable "snowflake_organization_name" {
-  type = string
+  type    = string
   default = "EONYLEP"
 }
 
 variable "snowflake_account_name" {
-  type = string
+  type    = string
   default = "SO18247"
 }
 
 variable "snowflake_login_name" {
-  type = string
+  type    = string
   default = "BADUC11TIN"
 }
 
 variable "snowflake_login_password" {
-  type = string
+  type    = string
   default = "PhanBaDuc2004@"
 }
 # ---------------------------------------------------

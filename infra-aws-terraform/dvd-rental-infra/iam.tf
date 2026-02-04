@@ -42,7 +42,7 @@ resource "aws_iam_role" "snowflake_role" {
       {
         Effect = "Allow"
         Principal = {
-          AWS = "arn:aws:iam::${var.aws_account_id}:root"  # Placeholder
+          AWS = "arn:aws:iam::${var.aws_account_id}:root" # Placeholder
         }
         Action = "sts:AssumeRole"
         Condition = {
