@@ -14,6 +14,15 @@ on:
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
+    inputs:
+      environment:
+        description: "Target environment"
+        required: true
+        default: "NON-PROD"
+        type: choice
+        options:
+          - NON-PROD
+          - PROD
 
 env:
   terraform-version: 1.7.5
@@ -21,12 +30,15 @@ env:
 jobs:
   terraform-validate:
     runs-on: ubuntu-latest
+    environment: ${{ github.event_name == 'workflow_dispatch' && inputs.environment || 'NON-PROD' }}
     concurrency:
       group: terraform-validate-${{ github.ref }}
       cancel-in-progress: true
     permissions:
       contents: read
       id-token: write
+    env:
+      DEPLOY_ENV: ${{ github.event_name == 'workflow_dispatch' && inputs.environment || 'NON-PROD' }}
     
     steps:
       - name: Checkout code
@@ -56,9 +68,21 @@ jobs:
           aws-region: us-east-1
 
       - name: Terraform Init (Dev)
-        working-directory: ./infra-aws-terraform/envs/dev
-        run: terraform init -backend=false
+        if: env.DEPLOY_ENV == 'NON-PROD'
+        working-directory: ./infra-aws-terraform/dvd-rental-infra
+        run: terraform init
 
       - name: Terraform Plan (Dev)
-        working-directory: ./infra-aws-terraform/envs/dev
+        if: env.DEPLOY_ENV == 'NON-PROD'
+        working-directory: ./infra-aws-terraform/dvd-rental-infra/env/dev
+        run: terraform plan -out=tfplan
+
+      - name: Terraform Init (Prod)
+        if: env.DEPLOY_ENV == 'PROD'
+        working-directory: ./infra-aws-terraform/dvd-rental-infra
+        run: terraform init
+
+      - name: Terraform Plan (Prod)
+        if: env.DEPLOY_ENV == 'PROD'
+        working-directory: ./infra-aws-terraform/dvd-rental-infra/env/prod
         run: terraform plan -out=tfplan

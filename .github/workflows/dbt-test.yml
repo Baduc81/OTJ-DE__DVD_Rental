@@ -14,16 +14,28 @@ on:
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
+    inputs:
+      environment:
+        description: "Target environment"
+        required: true
+        default: "NON-PROD"
+        type: choice
+        options:
+          - NON-PROD
+          - PROD
 
 jobs:
   dbt-test:
     runs-on: ubuntu-latest
-    environment: NON-PROD
+    environment: ${{ github.event_name == 'workflow_dispatch' && inputs.environment || 'NON-PROD' }}
     concurrency:
       group: dbt-test-${{ github.ref }}
       cancel-in-progress: true
     permissions:
       contents: read
+    env:
+      DEPLOY_ENV: ${{ github.event_name == 'workflow_dispatch' && inputs.environment || 'NON-PROD' }}
+      DBT_TARGET: ${{ (github.event_name == 'workflow_dispatch' && inputs.environment || 'NON-PROD') == 'PROD' && 'prod' || 'dev' }}
 
     steps:
       - name: Checkout code
@@ -45,24 +57,50 @@ jobs:
       - name: Set up dbt profiles
         run: |
           mkdir -p ${{ github.workspace }}/.dbt
+          DBT_DATABASE_PROD="${DBT_DATABASE_PROD:-$DBT_DATABASE}"
+          DBT_WAREHOUSE_PROD="${DBT_WAREHOUSE_PROD:-$DBT_WAREHOUSE}"
+          DBT_SCHEMA_PROD="${DBT_SCHEMA_PROD:-$DBT_SCHEMA}"
+          DBT_ROLE_PROD="${DBT_ROLE_PROD:-$DBT_ROLE}"
           cat <<EOF > ${{ github.workspace }}/.dbt/profiles.yml
           default:
-            target: dev
+            target: ${DBT_TARGET}
             outputs:
               dev:
                 type: snowflake
                 threads: 16
-                account: ${{ secrets.DBT_ACCOUNT }}
-                user: ${{ secrets.DBT_USER }}
-                database: ${{ secrets.DBT_DATABASE }}
-                warehouse: ${{ secrets.DBT_WAREHOUSE }}
-                schema: ${{ secrets.DBT_SCHEMA }}
-                password: ${{ secrets.DBT_PASSWORD }}
-                role: ${{ secrets.DBT_ROLE }}
+                account: ${DBT_ACCOUNT}
+                user: ${DBT_USER}
+                database: ${DBT_DATABASE}
+                warehouse: ${DBT_WAREHOUSE}
+                schema: ${DBT_SCHEMA}
+                password: ${DBT_PASSWORD}
+                role: ${DBT_ROLE}
+              prod:
+                type: snowflake
+                threads: 16
+                account: ${DBT_ACCOUNT}
+                user: ${DBT_USER}
+                database: ${DBT_DATABASE_PROD}
+                warehouse: ${DBT_WAREHOUSE_PROD}
+                schema: ${DBT_SCHEMA_PROD}
+                password: ${DBT_PASSWORD}
+                role: ${DBT_ROLE_PROD}
           EOF
           chmod 600 ${{ github.workspace }}/.dbt/profiles.yml
         env:
           DBT_PROFILES_DIR: ${{ github.workspace }}/.dbt
+          DBT_TARGET: ${{ env.DBT_TARGET }}
+          DBT_ACCOUNT: ${{ secrets.DBT_ACCOUNT }}
+          DBT_USER: ${{ secrets.DBT_USER }}
+          DBT_DATABASE: ${{ secrets.DBT_DATABASE }}
+          DBT_WAREHOUSE: ${{ secrets.DBT_WAREHOUSE }}
+          DBT_SCHEMA: ${{ secrets.DBT_SCHEMA }}
+          DBT_PASSWORD: ${{ secrets.DBT_PASSWORD }}
+          DBT_ROLE: ${{ secrets.DBT_ROLE }}
+          DBT_DATABASE_PROD: ${{ secrets.DBT_DATABASE_PROD }}
+          DBT_WAREHOUSE_PROD: ${{ secrets.DBT_WAREHOUSE_PROD }}
+          DBT_SCHEMA_PROD: ${{ secrets.DBT_SCHEMA_PROD }}
+          DBT_ROLE_PROD: ${{ secrets.DBT_ROLE_PROD }}
 
       - name: Install dbt packages
         working-directory: ./analytics-dbt
