@@ -31,7 +31,6 @@ jobs:
         working-directory: ./analytics-dbt
         run: |
           pip install --upgrade pip
-          pip install dbt-snowflake==1.7.0
           pip install -r requirements.txt 2>/dev/null || echo "No requirements.txt found"
         # "2>/dev/null || echo "No requirements.txt found" is used to suppress error if requirements.txt does not exist.
       
