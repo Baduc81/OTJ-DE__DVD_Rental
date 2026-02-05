@@ -76,7 +76,15 @@ jobs:
         if: env.DEPLOY_ENV == 'NON-PROD'
         working-directory: ./infra-aws-terraform/dvd-rental-infra
         run: terraform plan -out=env/dev/tfplan
-
+      
+        # Upload the plan as an artifact for later use
+      # - name: Upload Terraform Plan
+      #   if: env.DEPLOY_ENV == 'NON-PROD'
+      #   uses: actions/upload-artifact@v3
+      #   with:
+      #     name: tfplan-dev
+      #     path: infra-aws-terraform/dvd-rental-infra/env/dev/tfplan
+    
       - name: Terraform Init (Prod)
         if: env.DEPLOY_ENV == 'PROD'
         working-directory: ./infra-aws-terraform/dvd-rental-infra
@@ -86,3 +94,11 @@ jobs:
         if: env.DEPLOY_ENV == 'PROD'
         working-directory: ./infra-aws-terraform/dvd-rental-infra
         run: terraform plan -out=env/prod/tfplan
+      
+        # Upload the plan as an artifact for later use
+      # - name: Upload Terraform Plan
+      #   if: env.DEPLOY_ENV == 'PROD'
+      #   uses: actions/upload-artifact@v3
+      #   with:
+      #     name: tfplan-prod
+      #     path: infra-aws-terraform/dvd-rental-infra/env/prod/tfplan

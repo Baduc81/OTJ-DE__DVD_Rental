@@ -124,7 +124,10 @@ resource "aws_iam_policy" "github_actions_terraform_policy" {
           "iam:ListAttachedRolePolicies",
           "iam:GetPolicy",
           "iam:GetOpenIDConnectProvider",
-          "iam:AttachRolePolicy"
+          "iam:AttachRolePolicy",
+          "iam:GetPolicyVersion",
+          "iam:ListRolePolicies",
+          "iam:ListRoles",
         ]
         Resource = "*"
       }
