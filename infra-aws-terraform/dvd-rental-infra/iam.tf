@@ -108,12 +108,36 @@ resource "aws_iam_role" "github_actions_role" {
   })
 }
 
+# IAM policy for GitHub Actions Terraform operations
+resource "aws_iam_policy" "github_actions_terraform_policy" {
+  name        = "github-actions-terraform-policy"
+  description = "Policy for GitHub Actions to manage Terraform infrastructure"
+
+  policy = jsonencode({
+    Version = "2012-10-17"
+    Statement = [
+      {
+        Effect = "Allow"
+        Action = [
+          "s3:*",
+          "iam:GetRole",
+          "iam:ListAttachedRolePolicies",
+          "iam:GetPolicy",
+          "iam:GetOpenIDConnectProvider",
+        ]
+        Resource = "*"
+      }
+    ]
+  })
+}
+
+# Attach policy to GitHub Actions role
+resource "aws_iam_role_policy_attachment" "github_actions_terraform_policy_attachment" {
+  role       = aws_iam_role.github_actions_role.name
+  policy_arn = aws_iam_policy.github_actions_terraform_policy.arn
+}
+
 output "github_actions_role_arn" {
   value       = aws_iam_role.github_actions_role.arn
   description = "ARN of the IAM role for GitHub Actions"
 }
-
-# resource "aws_iam_role_policy_attachment" "github_actions_terraform_policy" {
-#   role       = aws_iam_role.github_actions_role.name
-#   policy_arn = "arn:aws:iam::aws:policy/PowerUserAccess" # Or create a more restrictive custom policy
-# }
