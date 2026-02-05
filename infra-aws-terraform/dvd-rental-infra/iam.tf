@@ -100,7 +100,7 @@ resource "aws_iam_role" "github_actions_role" {
           }
 
           StringLike = {
-            "token.actions.githubusercontent.com:sub" = "repo:${var.github_repo}:ref:${var.github_ref}:*"
+            "token.actions.githubusercontent.com:sub" = "repo:${var.github_repo}:*"
           }
         }
       }
@@ -111,4 +111,9 @@ resource "aws_iam_role" "github_actions_role" {
 output "github_actions_role_arn" {
   value       = aws_iam_role.github_actions_role.arn
   description = "ARN of the IAM role for GitHub Actions"
+}
+
+resource "aws_iam_role_policy_attachment" "github_actions_terraform_policy" {
+  role       = aws_iam_role.github_actions_role.name
+  policy_arn = "arn:aws:iam::aws:policy/PowerUserAccess"  # Or create a more restrictive custom policy
 }
