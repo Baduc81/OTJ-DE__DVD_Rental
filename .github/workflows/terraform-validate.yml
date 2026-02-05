@@ -74,8 +74,8 @@ jobs:
 
       - name: Terraform Plan (Dev)
         if: env.DEPLOY_ENV == 'NON-PROD'
-        working-directory: ./infra-aws-terraform/dvd-rental-infra/env/dev
-        run: terraform plan -out=tfplan
+        working-directory: ./infra-aws-terraform/dvd-rental-infra
+        run: terraform plan -out=env/dev/tfplan
 
       - name: Terraform Init (Prod)
         if: env.DEPLOY_ENV == 'PROD'
@@ -84,5 +84,5 @@ jobs:
 
       - name: Terraform Plan (Prod)
         if: env.DEPLOY_ENV == 'PROD'
-        working-directory: ./infra-aws-terraform/dvd-rental-infra/env/prod
-        run: terraform plan -out=tfplan
+        working-directory: ./infra-aws-terraform/dvd-rental-infra
+        run: terraform plan -out=env/prod/tfplan
