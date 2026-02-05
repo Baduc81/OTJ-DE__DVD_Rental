@@ -1,4 +1,4 @@
-name: Terraform Validate and Plan
+name: Terraform CI/CD
 
 on:
   push:
@@ -11,8 +11,8 @@ on:
       - main
     paths:
       - 'infra-aws-terraform/**'
-
-  # Allows you to run this workflow manually from the Actions tab
+  
+  # Manual deployment trigger
   workflow_dispatch:
     inputs:
       environment:
@@ -23,22 +23,23 @@ on:
         options:
           - NON-PROD
           - PROD
+      action:
+        description: "Action to perform"
+        required: true
+        default: "plan"
+        type: choice
+        options:
+          - plan
+          - apply
 
 env:
   terraform-version: 1.14.3
-# SQL Linting
+
 jobs:
+  # Validation job - runs on push and PR
   terraform-validate:
+    if: github.event_name == 'push' || github.event_name == 'pull_request'
     runs-on: ubuntu-latest
-    environment: ${{ github.event_name == 'workflow_dispatch' && inputs.environment || 'NON-PROD' }}
-    concurrency:
-      group: terraform-validate-${{ github.ref }}
-      cancel-in-progress: true
-    permissions:
-      contents: read
-      id-token: write
-    env:
-      DEPLOY_ENV: ${{ github.event_name == 'workflow_dispatch' && inputs.environment || 'NON-PROD' }}
     
     steps:
       - name: Checkout code
@@ -60,45 +61,121 @@ jobs:
       - name: Terraform Validate
         working-directory: ./infra-aws-terraform
         run: terraform validate
+
+  # Plan job - runs only on workflow_dispatch with action=plan
+  terraform-plan:
+    if: github.event_name == 'workflow_dispatch' && inputs.action == 'plan'
+    runs-on: ubuntu-latest
+    environment: ${{ inputs.environment }}
+    permissions:
+      contents: read
+      id-token: write
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_version: ${{ env.terraform-version }}
       
       - name: Configure AWS credentials (OIDC)
         uses: aws-actions/configure-aws-credentials@v5.1.0
         with:
           role-to-assume: ${{ secrets.AWS_ROLE_ARN }}
           aws-region: us-east-1
-
+      
       - name: Terraform Init (Dev)
-        if: env.DEPLOY_ENV == 'NON-PROD'
+        if: inputs.environment == 'NON-PROD'
         working-directory: ./infra-aws-terraform/dvd-rental-infra
         run: terraform init
-
+      
       - name: Terraform Plan (Dev)
-        if: env.DEPLOY_ENV == 'NON-PROD'
+        if: inputs.environment == 'NON-PROD'
         working-directory: ./infra-aws-terraform/dvd-rental-infra
-        run: terraform plan -out=env/dev/tfplan
+        run: terraform plan -out=tfplan-dev
       
-        # Upload the plan as an artifact for later use
-      # - name: Upload Terraform Plan
-      #   if: env.DEPLOY_ENV == 'NON-PROD'
-      #   uses: actions/upload-artifact@v3
-      #   with:
-      #     name: tfplan-dev
-      #     path: infra-aws-terraform/dvd-rental-infra/env/dev/tfplan
-    
+      - name: Upload Terraform Plan (Dev)
+        if: inputs.environment == 'NON-PROD'
+        uses: actions/upload-artifact@v4
+        with:
+          name: tfplan-dev
+          path: infra-aws-terraform/dvd-rental-infra/tfplan-dev
+          retention-days: 5
+      
       - name: Terraform Init (Prod)
-        if: env.DEPLOY_ENV == 'PROD'
+        if: inputs.environment == 'PROD'
         working-directory: ./infra-aws-terraform/dvd-rental-infra
         run: terraform init
-
-      - name: Terraform Plan (Prod)
-        if: env.DEPLOY_ENV == 'PROD'
-        working-directory: ./infra-aws-terraform/dvd-rental-infra
-        run: terraform plan -out=env/prod/tfplan
       
-        # Upload the plan as an artifact for later use
-      # - name: Upload Terraform Plan
-      #   if: env.DEPLOY_ENV == 'PROD'
-      #   uses: actions/upload-artifact@v3
-      #   with:
-      #     name: tfplan-prod
-      #     path: infra-aws-terraform/dvd-rental-infra/env/prod/tfplan
+      - name: Terraform Plan (Prod)
+        if: inputs.environment == 'PROD'
+        working-directory: ./infra-aws-terraform/dvd-rental-infra
+        run: terraform plan -out=tfplan-prod
+      
+      - name: Upload Terraform Plan (Prod)
+        if: inputs.environment == 'PROD'
+        uses: actions/upload-artifact@v4
+        with:
+          name: tfplan-prod
+          path: infra-aws-terraform/dvd-rental-infra/tfplan-prod
+          retention-days: 5
+
+  # Apply job - runs only on workflow_dispatch with action=apply
+  terraform-apply:
+    if: github.event_name == 'workflow_dispatch' && inputs.action == 'apply'
+    runs-on: ubuntu-latest
+    environment: ${{ inputs.environment }}
+    permissions:
+      contents: read
+      id-token: write
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_version: ${{ env.terraform-version }}
+      
+      - name: Configure AWS credentials (OIDC)
+        uses: aws-actions/configure-aws-credentials@v5.1.0
+        with:
+          role-to-assume: ${{ secrets.AWS_ROLE_ARN }}
+          aws-region: us-east-1
+      
+      - name: Download Terraform Plan (Dev)
+        if: inputs.environment == 'NON-PROD'
+        uses: actions/download-artifact@v4
+        with:
+          name: tfplan-dev
+          path: infra-aws-terraform/dvd-rental-infra/
+      
+      - name: Terraform Init (Dev)
+        if: inputs.environment == 'NON-PROD'
+        working-directory: ./infra-aws-terraform/dvd-rental-infra
+        run: terraform init
+      
+      - name: Terraform Apply (Dev)
+        if: inputs.environment == 'NON-PROD'
+        working-directory: ./infra-aws-terraform/dvd-rental-infra
+        run: terraform apply tfplan-dev
+      
+      - name: Download Terraform Plan (Prod)
+        if: inputs.environment == 'PROD'
+        uses: actions/download-artifact@v4
+        with:
+          name: tfplan-prod
+          path: infra-aws-terraform/dvd-rental-infra/
+      
+      - name: Terraform Init (Prod)
+        if: inputs.environment == 'PROD'
+        working-directory: ./infra-aws-terraform/dvd-rental-infra
+        run: terraform init
+      
+      - name: Terraform Apply (Prod)
+        if: inputs.environment == 'PROD'
+        working-directory: ./infra-aws-terraform/dvd-rental-infra
+        run: terraform apply tfplan-prod
