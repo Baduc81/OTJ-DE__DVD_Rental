@@ -94,14 +94,14 @@ jobs:
       - name: Terraform Plan (Dev)
         if: inputs.environment == 'NON-PROD'
         working-directory: ./infra-aws-terraform/dvd-rental-infra
-        run: terraform plan -out=tfplan-dev
+        run: terraform plan -out=env/tfplan-dev
       
       - name: Upload Terraform Plan (Dev)
         if: inputs.environment == 'NON-PROD'
         uses: actions/upload-artifact@v4
         with:
           name: tfplan-dev
-          path: infra-aws-terraform/dvd-rental-infra/tfplan-dev
+          path: infra-aws-terraform/dvd-rental-infra/env/tfplan-dev
           retention-days: 5
       
       - name: Terraform Init (Prod)
@@ -112,14 +112,14 @@ jobs:
       - name: Terraform Plan (Prod)
         if: inputs.environment == 'PROD'
         working-directory: ./infra-aws-terraform/dvd-rental-infra
-        run: terraform plan -out=tfplan-prod
+        run: terraform plan -out=env/tfplan-prod
       
       - name: Upload Terraform Plan (Prod)
         if: inputs.environment == 'PROD'
         uses: actions/upload-artifact@v4
         with:
           name: tfplan-prod
-          path: infra-aws-terraform/dvd-rental-infra/tfplan-prod
+          path: infra-aws-terraform/dvd-rental-infra/env/tfplan-prod
           retention-days: 5
 
   # Apply job - runs only on workflow_dispatch with action=apply
@@ -151,7 +151,7 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: tfplan-dev
-          path: infra-aws-terraform/dvd-rental-infra/
+          path: infra-aws-terraform/dvd-rental-infra/env/
       
       - name: Terraform Init (Dev)
         if: inputs.environment == 'NON-PROD'
@@ -161,14 +161,14 @@ jobs:
       - name: Terraform Apply (Dev)
         if: inputs.environment == 'NON-PROD'
         working-directory: ./infra-aws-terraform/dvd-rental-infra
-        run: terraform apply tfplan-dev
+        run: terraform apply env/tfplan-dev
       
       - name: Download Terraform Plan (Prod)
         if: inputs.environment == 'PROD'
         uses: actions/download-artifact@v4
         with:
           name: tfplan-prod
-          path: infra-aws-terraform/dvd-rental-infra/
+          path: infra-aws-terraform/dvd-rental-infra/env/
       
       - name: Terraform Init (Prod)
         if: inputs.environment == 'PROD'
@@ -178,4 +178,4 @@ jobs:
       - name: Terraform Apply (Prod)
         if: inputs.environment == 'PROD'
         working-directory: ./infra-aws-terraform/dvd-rental-infra
-        run: terraform apply tfplan-prod
+        run: terraform apply env/tfplan-prod
