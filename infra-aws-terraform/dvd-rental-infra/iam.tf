@@ -113,7 +113,7 @@ output "github_actions_role_arn" {
   description = "ARN of the IAM role for GitHub Actions"
 }
 
-resource "aws_iam_role_policy_attachment" "github_actions_terraform_policy" {
-  role       = aws_iam_role.github_actions_role.name
-  policy_arn = "arn:aws:iam::aws:policy/PowerUserAccess"  # Or create a more restrictive custom policy
-}
+# resource "aws_iam_role_policy_attachment" "github_actions_terraform_policy" {
+#   role       = aws_iam_role.github_actions_role.name
+#   policy_arn = "arn:aws:iam::aws:policy/PowerUserAccess" # Or create a more restrictive custom policy
+# }
