@@ -34,7 +34,7 @@ on:
 
 jobs:
   dbt-test:
-    if: github.event_name == 'push' || github.event_name == 'pull_request'
+    if: github.event_name == 'push' || github.event_name == 'pull_request' || (github.event_name == 'workflow_dispatch' && inputs.action == 'Validate')
     runs-on: ubuntu-latest
     
     # if github.event_name = 'workflow_dispatch' then environment = inputs.environment else environment = 'NON-PROD'
