@@ -23,18 +23,37 @@ on:
         options:
           - NON-PROD
           - PROD
+      action:
+        description: Action to perform
+        required: true 
+        default: "Validate"
+        type: choice
+        options:
+          - Validate
+          - Deploy
 
 jobs:
   dbt-test:
+    if: github.event_name == 'push' || github.event_name == 'pull_request' || (github.event_name == 'workflow_dispatch' && inputs.action == 'Validate')
     runs-on: ubuntu-latest
+    
+    # if github.event_name = 'workflow_dispatch' then environment = inputs.environment else environment = 'NON-PROD'
+    # "environment" là biến môi trường của github action, dùng để chọn bộ secrets theo environment nào
     environment: ${{ github.event_name == 'workflow_dispatch' && inputs.environment || 'NON-PROD' }}
+
+    # Use to avoid running this tasl multiple times at once
     concurrency:
       group: dbt-test-${{ github.ref }}
+      # If there is a new workflow running with the group, The running job will be canceled. Only keep the latest job
       cancel-in-progress: true
+      
     permissions:
       contents: read
+      
+    # Runtime environment variables
     env:
       DEPLOY_ENV: ${{ github.event_name == 'workflow_dispatch' && inputs.environment || 'NON-PROD' }}
+      # Vì dbt không biết khái niệm NON-PROD nên phải đổi NON-PROD thành dev
       DBT_TARGET: ${{ (github.event_name == 'workflow_dispatch' && inputs.environment || 'NON-PROD') == 'PROD' && 'prod' || 'dev' }}
 
     steps:
@@ -57,15 +76,11 @@ jobs:
       - name: Set up dbt profiles
         run: |
           mkdir -p ${{ github.workspace }}/.dbt
-          DBT_DATABASE_PROD="${DBT_DATABASE_PROD:-$DBT_DATABASE}"
-          DBT_WAREHOUSE_PROD="${DBT_WAREHOUSE_PROD:-$DBT_WAREHOUSE}"
-          DBT_SCHEMA_PROD="${DBT_SCHEMA_PROD:-$DBT_SCHEMA}"
-          DBT_ROLE_PROD="${DBT_ROLE_PROD:-$DBT_ROLE}"
           cat <<EOF > ${{ github.workspace }}/.dbt/profiles.yml
           default:
             target: ${DBT_TARGET}
             outputs:
-              dev:
+              ${DBT_TARGET}:
                 type: snowflake
                 threads: 16
                 account: ${DBT_ACCOUNT}
@@ -75,16 +90,6 @@ jobs:
                 schema: ${DBT_SCHEMA}
                 password: ${DBT_PASSWORD}
                 role: ${DBT_ROLE}
-              prod:
-                type: snowflake
-                threads: 16
-                account: ${DBT_ACCOUNT}
-                user: ${DBT_USER}
-                database: ${DBT_DATABASE_PROD}
-                warehouse: ${DBT_WAREHOUSE_PROD}
-                schema: ${DBT_SCHEMA_PROD}
-                password: ${DBT_PASSWORD}
-                role: ${DBT_ROLE_PROD}
           EOF
           chmod 600 ${{ github.workspace }}/.dbt/profiles.yml
         env:
@@ -97,10 +102,6 @@ jobs:
           DBT_SCHEMA: ${{ secrets.DBT_SCHEMA }}
           DBT_PASSWORD: ${{ secrets.DBT_PASSWORD }}
           DBT_ROLE: ${{ secrets.DBT_ROLE }}
-          DBT_DATABASE_PROD: ${{ secrets.DBT_DATABASE_PROD }}
-          DBT_WAREHOUSE_PROD: ${{ secrets.DBT_WAREHOUSE_PROD }}
-          DBT_SCHEMA_PROD: ${{ secrets.DBT_SCHEMA_PROD }}
-          DBT_ROLE_PROD: ${{ secrets.DBT_ROLE_PROD }}
 
       - name: Install dbt packages
         working-directory: ./analytics-dbt
@@ -136,3 +137,28 @@ jobs:
           path: |
             analytics-dbt/target/manifest.json
             analytics-dbt/target/run_results.json
+  
+  dbt-deploy:
+    if: github.event_name == 'workflow_dispatch' && inputs.action == 'Deploy'
+    runs-on: ubuntu-latest
+    environment: ${{ inputs.environment }}
+    
+    steps:
+      - name: Trigger dbt Cloud Job
+        run: |
+          response=$(curl -X POST \
+            -H "Authorization: Token ${DBT_TOKEN_VALUE}" \
+            -H "Content-Type: application/json" \
+            -d "{\"cause\": \"Triggered via GitHub Actions - ${{ inputs.environment }}\"}" \
+            https://cw723.us1.dbt.com/api/v2/accounts/${DBT_ACCOUNT_ID}/jobs/${DBT_JOB_ID}/run/)
+          
+          echo "dbt Cloud API Response:"
+          echo "$response"
+          
+          # Extract run ID from response (optional - for tracking)
+          run_id=$(echo "$response" | grep -o '"id":[0-9]*' | head -1 | cut -d':' -f2)
+          echo "dbt Cloud Run ID: $run_id"
+        env:
+          DBT_ACCOUNT_ID: ${{ secrets.DBT_ACCOUNT_ID }}
+          DBT_JOB_ID: ${{ secrets.DBT_JOB_ID }}
+          DBT_TOKEN_VALUE: ${{ secrets.DBT_TOKEN_VALUE }}
